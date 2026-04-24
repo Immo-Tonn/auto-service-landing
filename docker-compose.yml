@@ -8,6 +8,8 @@ services:
       # Для продакшна смени на: target: prod
       target: dev
 
+    # command: npx next dev --turbo --port 3000
+
     container_name: auto-service-landing
 
     ports:
@@ -27,6 +29,7 @@ services:
       # Решение: этот volume "закрывает" папку /app/node_modules от перезаписи,
       # сохраняя внутри именно те модули, что установлены в контейнере.
       - /app/node_modules
+      # - /app/.next
 
     environment:
       - NODE_ENV=development
