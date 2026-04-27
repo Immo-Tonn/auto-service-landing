@@ -1,3 +1,4 @@
 {
-    "liveServer.settings.multiRootWorkspaceName": "auto-service-landing"
+    "liveServer.settings.multiRootWorkspaceName": "auto-service-landing",
+    "css.lint.unknownAtRules": "ignore"
 }
