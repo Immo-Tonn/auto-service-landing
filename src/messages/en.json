@@ -1,0 +1,24 @@
+{
+  "hero": {
+    "title": "Your Auto Experts — Safe, Fast and Reliable",
+    "subtitle": "Inspection, repair or MOT — we'll get your car back on the road",
+    "cta": "Book a Service"
+  },
+  "nav": {
+    "services": "Services",
+    "about": "About",
+    "reviews": "Reviews",
+    "contact": "Contact"
+  },
+  "booking": {
+    "title": "Book a Service",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "reset": "Reset",
+    "submit": "Submit",
+    "success": "Your appointment has been booked!",
+    "confirmation": "You will receive a confirmation by email"
+  }
+}

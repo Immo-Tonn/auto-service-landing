@@ -1,0 +1,24 @@
+{
+  "hero": {
+    "title": "Ihre Autoexperten — sicher, schnell und zuverlässig",
+    "subtitle": "Inspektion, Reparatur oder HU — wir bringen Ihr Fahrzeug zurück auf die Straße",
+    "cta": "Termin buchen"
+  },
+  "nav": {
+    "services": "Leistungen",
+    "about": "Über uns",
+    "reviews": "Bewertungen",
+    "contact": "Kontakt"
+  },
+  "booking": {
+    "title": "Termin buchen",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "reset": "Zurücksetzen",
+    "submit": "Absenden",
+    "success": "Ihr Termin wurde erfolgreich gebucht!",
+    "confirmation": "Sie erhalten eine Bestätigung per E-Mail"
+  }
+}
