@@ -12,6 +12,7 @@
   },
   "booking": {
     "title": "Termin buchen",
+    "selectDate": "Wählen Sie einen Termin",
     "firstName": "Vorname",
     "lastName": "Nachname",
     "email": "E-Mail",
@@ -19,6 +20,8 @@
     "reset": "Zurücksetzen",
     "submit": "Absenden",
     "success": "Ihr Termin wurde erfolgreich gebucht!",
-    "confirmation": "Sie erhalten eine Bestätigung per E-Mail"
+    "confirmation": "Sie erhalten eine Bestätigung per E-Mail",
+    "booked": "Belegt",
+    "available": "Verfügbar"
   }
 }

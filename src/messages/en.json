@@ -12,6 +12,7 @@
   },
   "booking": {
     "title": "Book a Service",
+    "selectDate": "Wählen Sie einen Termin",
     "firstName": "First Name",
     "lastName": "Last Name",
     "email": "Email",
@@ -19,6 +20,8 @@
     "reset": "Reset",
     "submit": "Submit",
     "success": "Your appointment has been booked!",
-    "confirmation": "You will receive a confirmation by email"
+    "confirmation": "You will receive a confirmation by email",
+    "booked": "Booked",
+    "available": "Available"
   }
 }
