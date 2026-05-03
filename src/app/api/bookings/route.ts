@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { sendBookingEmails } from '@/lib/email'
+import { sendTelegramNotification } from '@/lib/telegram'
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,10 +15,9 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const bookingDate = new Date(date)
-    bookingDate.setHours(10, 0, 0, 0)
+    const bookingDate = new Date(date + 'T10:00:00.000Z')
 
-    // Проверка что дата не занята
+    // Checking that the date is not already booked
     const existing = await prisma.booking.findUnique({
       where: { date: bookingDate },
     })
@@ -38,6 +39,33 @@ export async function POST(req: NextRequest) {
         locale: locale || 'de',
       },
     })
+
+    await sendBookingEmails({
+      firstName,
+      lastName,
+      email,
+      phone,
+      date,
+      locale: locale || 'de',
+    }).catch((err) => console.error('Email error:', err))
+    
+    const notificationData = {
+  firstName,
+  lastName,
+  email,
+  phone,
+  date,
+  locale: locale || 'de',
+}
+
+await Promise.all([
+  sendBookingEmails(notificationData).catch((err) =>
+    console.error('Email error:', err)
+  ),
+  sendTelegramNotification(notificationData).catch((err) =>
+    console.error('Telegram error:', err)
+  ),
+])
 
     return NextResponse.json(booking, { status: 201 })
   } catch (error) {

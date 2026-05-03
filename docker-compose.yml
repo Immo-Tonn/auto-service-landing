@@ -8,7 +8,7 @@ services:
       # Для продакшна смени на: target: prod
       target: dev
 
-    # command: npx next dev --turbo --port 3000
+    command: npx next dev --port 3000
 
     container_name: auto-service-landing
 
@@ -41,6 +41,7 @@ services:
       # и hot reload работать не будет.
       # Polling = "проверяй каждые N миллисекунд, не изменился ли файл".
       - WATCHPACK_POLLING=true
+      - NEXT_TURBOPACK=0
 
     # env_file: .env  # <-- раскомментируй, когда появятся секреты в .env файле
 

@@ -60,7 +60,8 @@ export default function LoginPage() {
           <button
             onClick={handleSubmit}
             disabled={loading || !email || !password}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold py-2 px-4 rounded-lg transition"
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:opacity-60 text-white font-bold py-2 px-4 rounded-lg transition"
+            // className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold py-2 px-4 rounded-lg transition"
           >
             {loading ? 'Laden...' : 'Anmelden'}
           </button>

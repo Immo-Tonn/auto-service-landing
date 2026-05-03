@@ -11,9 +11,10 @@ interface DateSlot {
 interface Props {
   onDateSelect: (date: string) => void
   selectedDate: string | null
+  refreshKey: number
 }
 
-export default function BookingCalendar({ onDateSelect, selectedDate }: Props) {
+export default function BookingCalendar({ onDateSelect, selectedDate, refreshKey }: Props) {
   const t = useTranslations('booking')
   const [slots, setSlots] = useState<DateSlot[]>([])
   const [loading, setLoading] = useState(true)
@@ -25,7 +26,7 @@ export default function BookingCalendar({ onDateSelect, selectedDate }: Props) {
         setSlots(data)
         setLoading(false)
       })
-  }, [])
+  }, [refreshKey])
 
   if (loading) {
     return <div className="text-slate-400 text-center py-4">Laden...</div>
