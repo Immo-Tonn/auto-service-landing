@@ -1,18 +1,49 @@
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
 import { prisma } from '@/lib/db'
 import { authOptions } from '@/lib/auth'
 
-export default async function DashboardPage() {
-  const session = await getServerSession(authOptions)
+type SortField = 'name' | 'date'
+type SortOrder = 'asc' | 'desc'
 
-  if (!session) {
-    redirect('/admin/login')
+function sortHref(active: SortField, order: SortOrder, target: SortField) {
+  if (active === target) {
+    return `?sort=${target}&order=${order === 'asc' ? 'desc' : 'asc'}`
   }
+  return `?sort=${target}&order=asc`
+}
 
-  const bookings = await prisma.booking.findMany({
-    orderBy: { createdAt: 'desc' },
-  })
+function sortIcon(active: SortField, order: SortOrder, target: SortField) {
+  if (active !== target) return '↕'
+  return order === 'asc' ? '↑' : '↓'
+}
+
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ sort?: string; order?: string }>
+}) {
+  const session = await getServerSession(authOptions)
+  if (!session) redirect('/admin/login')
+
+  const params = await searchParams
+  const sortField: SortField =
+    params.sort === 'name' || params.sort === 'date' ? params.sort : 'date'
+  const sortOrder: SortOrder =
+    params.order === 'asc' || params.order === 'desc' ? params.order : 'desc'
+
+  const orderBy =
+    sortField === 'name'
+      ? [{ firstName: sortOrder }, { lastName: sortOrder }]
+      : [{ date: sortOrder }]
+
+  const bookings = await prisma.booking.findMany({ orderBy })
+
+  const thClass = 'text-left p-4 font-medium'
+  const linkClass =
+    'flex items-center gap-1 text-slate-600 hover:text-slate-900 select-none'
+  const iconClass = 'text-slate-400 text-xs'
 
   return (
     <div className="min-h-screen bg-slate-100 p-8">
@@ -28,8 +59,18 @@ export default async function DashboardPage() {
           <table className="w-full">
             <thead className="bg-slate-50 border-b">
               <tr>
-                <th className="text-left p-4 text-slate-600 font-medium">Name</th>
-                <th className="text-left p-4 text-slate-600 font-medium">Datum</th>
+                <th className={thClass}>
+                  <Link href={sortHref(sortField, sortOrder, 'name')} className={linkClass}>
+                    Name
+                    <span className={iconClass}>{sortIcon(sortField, sortOrder, 'name')}</span>
+                  </Link>
+                </th>
+                <th className={thClass}>
+                  <Link href={sortHref(sortField, sortOrder, 'date')} className={linkClass}>
+                    Datum
+                    <span className={iconClass}>{sortIcon(sortField, sortOrder, 'date')}</span>
+                  </Link>
+                </th>
                 <th className="text-left p-4 text-slate-600 font-medium">Kontakt</th>
                 <th className="text-left p-4 text-slate-600 font-medium">Status</th>
               </tr>

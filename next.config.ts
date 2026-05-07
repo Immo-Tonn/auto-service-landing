@@ -3,13 +3,12 @@ import createNextIntlPlugin from 'next-intl/plugin'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
-
 const nextConfig: NextConfig = {
   // Standalone режим: Next.js создаёт минимальный бандл для продакшна.
   // Docker-образ получается в ~10 раз меньше, чем если копировать node_modules целиком.
   output: "standalone",
   devIndicators: false,
+  allowedDevOrigins: ['172.21.208.1', '192.168.188.50'],
 };
 
-// export default nextConfig;
 export default withNextIntl(nextConfig)
