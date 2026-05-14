@@ -33,7 +33,7 @@ export default function BookingCalendar({ onDateSelect, selectedDate, refreshKey
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+    <div className="bg-[#000111] grid grid-cols-2 sm:grid-cols-5 gap-2">
       {slots.map((slot) => {
         const date = new Date(slot.date + 'T12:00:00')
         const isSelected = selectedDate === slot.date
@@ -49,7 +49,7 @@ export default function BookingCalendar({ onDateSelect, selectedDate, refreshKey
                 ? 'bg-slate-100 text-slate-400 cursor-not-allowed border-slate-200'
                 : isSelected
                 ? 'bg-blue-600 text-white border-blue-600'
-                : 'bg-white text-slate-700 hover:border-blue-400 border-slate-200 cursor-pointer'
+                : 'bg-[#000111] text-slate-300 border border-slate-400 hover:border-blue-200 hover:border-2 cursor-pointer'
               }
             `}
           >

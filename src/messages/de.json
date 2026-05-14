@@ -2,13 +2,24 @@
   "hero": {
     "title": "Ihre Autoexperten — sicher, schnell und zuverlässig",
     "subtitle": "Inspektion, Reparatur oder HU — wir bringen Ihr Fahrzeug zurück auf die Straße",
-    "cta": "Termin buchen"
+    "cta": "Termin buchen",
+    "bookingBtn": "Termin buchen",
+    "callbackBtn": "Rückruf anfordern"
+  },
+  "callback": {
+    "title": "Rückruf-Informationen",
+    "name": "Ihr Name",
+    "phone": "Ihre Telefonnummer",
+    "submit": "Absenden",
+    "success": "Danke! Wir rufen Sie so bald wie möglich zurück.",
+    "error": "Fehler. Bitte versuchen Sie es erneut."
   },
   "nav": {
+    "home": "Hauptseite",
     "services": "Leistungen",
     "about": "Über uns",
-    "reviews": "Bewertungen",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "workHours": "Mo–Sa von 9:00 bis 20:00"
   },
   "booking": {
     "title": "Termin buchen",
@@ -23,5 +34,28 @@
     "confirmation": "Sie erhalten eine Bestätigung per E-Mail",
     "booked": "Belegt",
     "available": "Verfügbar"
+  },
+  "footer": {
+    "tagline1": "Ihr zuverlässiger Kfz-Service in der Region",
+    "tagline2": "Qualität, Vertrauen und Schnelligkeit — seit Jahren.",
+    "nav": {
+      "title": "Navigation",
+      "home": "Hauptseite",
+      "services": "Leistungen",
+      "about": "Über uns",
+      "contact": "Kontakt"
+    },
+    "legal": {
+      "title": "Rechtliches",
+      "privacy": "Datenschutz",
+      "legalNotice": "Impressum"
+    },
+    "contact": {
+      "title": "Kontakte",
+      "phone": "+49 123 4567890",
+      "email": "info@autoservice.de",
+      "hours": "Mo–Sa: 9:00 – 20:00 Uhr"
+    },
+    "copyright": "AutoService © {year} — Alle Rechte vorbehalten. Website entwickelt von "
   }
 }

@@ -13,6 +13,7 @@
     "@heroui/styles": "^3.0.3",
     "@heroui/system": "^2.4.28",
     "@heroui/theme": "^2.4.26",
+    "@icons-pack/react-simple-icons": "^13.11.1",
     "@prisma/adapter-neon": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@types/bcryptjs": "^2.4.6",
