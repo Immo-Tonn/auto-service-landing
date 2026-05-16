@@ -220,7 +220,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
+              className="fixed inset-0 z-[60] bg-black/60 "
               onClick={() => setMenuOpen(false)}
             />
 
@@ -232,7 +232,7 @@ export default function Header() {
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.3, ease: 'easeInOut' }}
               className="
-                fixed top-0 right-0 h-full w-72
+                fixed top-0 right-0 h-auto w-72
                 z-[70] bg-[#1c1408]
                 rounded-l-2xl shadow-2xl
                 flex flex-col p-6
