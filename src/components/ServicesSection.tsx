@@ -1,10 +1,9 @@
 'use client'
 // src/components/ServicesSection.tsx
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
 
 const SERVICES = [
   {
@@ -28,38 +27,55 @@ function ServiceCard({ id, hasSlides, onClick }: { id: string; hasSlides: boolea
   const t = useTranslations('services')
   return (
     <div
-      onClick={hasSlides ? onClick : undefined}
-      className={`group relative flex flex-col overflow-hidden rounded-sm transition-transform duration-300 ${hasSlides ? 'cursor-pointer hover:-translate-y-1' : 'cursor-default opacity-60'}`}
-      style={{
-        background: 'linear-gradient(170deg, #080808 0%, #120e00 35%, #2a1d00 62%, #3e2c00 80%, #503800 100%)',
-        minHeight: '280px',
-      }}
-    >
-      <div className="flex flex-col flex-1 px-6 pt-8 pb-5">
-        <div className="flex-1 flex items-center justify-center">
-          <h3
-            className="text-white font-bold text-center uppercase text-[11px] sm:text-xs lg:text-[13px] tracking-[0.13em] leading-[1.9]"
-            style={{ textShadow: '0 0 18px rgba(255,255,255,0.25)' }}
-          >
-            {t(`cards.${id}.title`)}
-          </h3>
-        </div>
-        <div className="text-center mt-5">
-          <span className="text-[9px] tracking-[0.3em] uppercase font-medium transition-colors duration-300 text-yellow-700/50 group-hover:text-yellow-400/80">
-            {t('more')}
-          </span>
-        </div>
+  onClick={hasSlides ? onClick : undefined}
+  className={`
+    group relative flex flex-col
+    transition-transform duration-300
+    ${hasSlides ? 'cursor-pointer hover:-translate-y-1' : 'cursor-default opacity-60'}
+  `}
+>
+  {/* Карточка — градиент ярче и теплее */}
+  <div
+    className="rounded-sm flex flex-col flex-1"
+    style={{
+      background:
+        'linear-gradient(170deg, #090909 0%, #1c1200 28%, #4a3000 56%, #7a5000 78%, #9a6800 100%)',
+      minHeight: '280px',
+      width: '260px',
+    }}
+  >
+    <div className="flex flex-col flex-1 px-6 pt-8 pb-5">
+      <div className="flex-1 flex items-center justify-center">
+        <h3
+          className="text-white font-bold text-center uppercase text-[11px] sm:text-xs lg:text-[13px] tracking-[0.13em] leading-[1.9]"
+          style={{ textShadow: '0 0 22px rgba(255,255,255,0.4)' }}
+        >
+          {t(`cards.${id}.title`)}
+        </h3>
       </div>
-      <div
-        className="w-full"
-        style={{
-          height: '4px',
-          background: 'linear-gradient(90deg, #7a5200 0%, #e8ad00 30%, #ffd000 50%, #e8ad00 70%, #7a5200 100%)',
-          boxShadow: '0 0 18px 5px rgba(232,173,0,0.65), 0 0 40px 12px rgba(232,173,0,0.28)',
-        }}
-      />
+      <div className="text-center mt-5">
+        <span className="text-[9px] tracking-[0.3em] uppercase font-medium transition-colors duration-300 text-yellow-600/60 group-hover:text-yellow-400/90">
+          {t('more')}
+        </span>
+      </div>
     </div>
-  )
+  </div>
+
+  {/* Полоска — шире карточки, ярче */}
+  <div
+    style={{
+      height: '7px',
+      marginLeft: '-10px',
+      marginRight: '-10px',
+      background:
+        'linear-gradient(90deg, #8b6200 0%, #f5c000 25%, #ffe566 50%, #f5c000 75%, #8b6200 100%)',
+      boxShadow:
+        '0 0 28px 9px rgba(255,210,0,0.9), 0 0 60px 20px rgba(255,180,0,0.5)',
+      borderRadius: '0 0 4px 4px',
+    }}
+  />
+</div>
+ )
 }
 
 function SliderModal({ serviceId, slides, onClose }: { serviceId: string; slides: string[]; onClose: () => void }) {
@@ -67,10 +83,30 @@ function SliderModal({ serviceId, slides, onClose }: { serviceId: string; slides
   const captions = t.raw(`cards.${serviceId}.slides`) as string[]
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const touchStartX = useRef<number | null>(null)
 
   const goTo = (index: number, dir: number) => { setDirection(dir); setCurrent(index) }
   const prev = () => { if (current > 0) goTo(current - 1, -1) }
   const next = () => { if (current < slides.length - 1) goTo(current + 1, 1) }
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    const dx = e.changedTouches[0].clientX - touchStartX.current
+    touchStartX.current = null
+    if (Math.abs(dx) < 50) return
+    const el = scrollRef.current
+    if (!el) return
+    if (dx < 0 && current < slides.length - 1) {
+      if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 4) next()
+    } else if (dx > 0 && current > 0) {
+      if (el.scrollLeft <= 4) prev()
+    }
+  }
 
   const variants = {
     enter:  (dir: number) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
@@ -82,7 +118,7 @@ function SliderModal({ serviceId, slides, onClose }: { serviceId: string; slides
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 backdrop-blur-sm px-4"
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 px-4"
       onClick={onClose}
     >
       <motion.div
@@ -96,17 +132,30 @@ function SliderModal({ serviceId, slides, onClose }: { serviceId: string; slides
           ×
         </button>
 
-        <div className="relative overflow-hidden" style={{ height: '420px' }}>
+        <div
+          className="relative overflow-hidden"
+          style={{ height: '420px' }}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <AnimatePresence custom={direction} mode="wait">
             <motion.div key={current} custom={direction} variants={variants}
               initial="enter" animate="center" exit="exit"
               transition={{ duration: 0.35, ease: 'easeInOut' }}
-              className="absolute inset-0">
-              <Image
-                src={slides[current]} alt={captions?.[current] ?? ''} fill
-                className="object-cover" sizes="(max-width: 768px) 100vw, 768px"
-                unoptimized={slides[current].endsWith('.jfif')}
-              />
+              className="absolute inset-0"
+            >
+              <div
+                ref={scrollRef}
+                className="w-full h-full overflow-x-auto overflow-y-hidden"
+                style={{ touchAction: 'pan-x' }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={slides[current]}
+                  alt={captions?.[current] ?? ''}
+                  className="h-full w-auto max-w-none sm:w-full sm:object-cover"
+                />
+              </div>
             </motion.div>
           </AnimatePresence>
 
@@ -157,7 +206,7 @@ export default function ServicesSection() {
         <h2 className="text-2xl sm:text-3xl font-bold text-center text-white mb-14 tracking-wide">
           {t('sectionTitle')}
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 justify-items-center">
           {SERVICES.map((service) => (
             <ServiceCard key={service.id} id={service.id}
               hasSlides={service.slides.length > 0}
