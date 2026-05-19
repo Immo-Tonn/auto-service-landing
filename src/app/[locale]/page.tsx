@@ -60,26 +60,11 @@ export default function Home() {
 
         </section>
 
-        {/* ── Services ──────────────────────────────────────────────────── */}
-        
+        {/* ── Services ──────────────────────────────────────────────────── */}        
         <ServicesSection />
-        {/* <section id="services" className="bg-zinc-900 py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-12 text-slate-200">
-              {t('nav.services')}
-            </h2>
-          </div>
-        </section> */}
 
         {/* ── About ─────────────────────────────────────────────────────── */}
         <AboutSection/>
-        {/* <section id="about" className="bg-zinc-800 py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-12 text-slate-200">
-              {t('nav.about')}
-            </h2>
-          </div>
-        </section> */}
 
         {/* ── Contact ───────────────────────────────────────────────────── */}
         <section id="contact" className="bg-zinc-900 py-20">
