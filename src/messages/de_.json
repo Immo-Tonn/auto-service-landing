@@ -21,6 +21,49 @@
     "contact": "Kontakt",
     "workHours": "Mo–Sa von 9:00 bis 20:00"
   },
+  "services": {
+    "sectionTitle": "Unsere Leistungen",
+    "more": "Mehr erfahren",
+    "cards": {
+      "maintenance": {
+        "title": "Wartung nach Herstellervorschrift",
+        "slides": [
+          "Planmäßige Wartung nach Herstellervorschrift",
+          "Jährliche Inspektion unabhängig von den Betriebsbedingungen",
+          "Kontrolle der Wartungsintervalle"
+        ]
+      },
+      "suspension": {
+        "title": "Fahrwerk und Bremssystem – prüfen, reparieren, warten"
+      },
+      "engine": {
+        "title": "Motor – Diagnose und Reparatur",
+        "slides": [
+          "Computerdiagnose",
+          "Reparatur der Motorelektrik",
+          "Motorüberholung"
+        ]
+      },
+      "steering": {
+        "title": "Lenkgetriebe – Diagnose und Reparatur"
+      },
+      "aircon": {
+        "title": "Klimaanlage – Diagnose, Befüllung, Reparatur"
+      },
+      "alignment": {
+        "title": "Spureinstellung und Achsvermessung"
+      },
+      "tires": {
+        "title": "Reifenmontage und Auswuchten"
+      },
+      "injector": {
+        "title": "Einspritzdüsenreinigung"
+      },
+      "diagnostics": {
+        "title": "Computerdiagnose"
+      }
+    }
+  },
   "booking": {
     "title": "Termin buchen",
     "selectDate": "Wählen Sie einen Termin",
@@ -56,6 +99,6 @@
       "email": "info@autoservice.de",
       "hours": "Mo–Sa: 9:00 – 20:00 Uhr"
     },
-    "copyright": "AutoService © {year} — Alle Rechte vorbehalten. Website entwickelt von "
+    "copyright": "AutoService © {year} — Alle Rechte vorbehalten"
   }
 }

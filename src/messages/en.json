@@ -21,6 +21,26 @@
     "contact": "Contact",
     "workHours": "Mon–Sat 9:00 to 20:00"
   },
+  "about": {
+    "title": "About Us",
+    "imgAlt": "Inside the workshop",
+    "p1": "Our company specialises in the maintenance and repair of passenger vehicles — both foreign and domestic. Our team consists of experienced professionals working with state-of-the-art equipment.",
+    "p2": "Quality and reliability come first — from diagnostics to completion. Every job is handled with attention to detail and to the highest standards.",
+    "p3": "Our goal is your complete satisfaction. That is why our customers keep coming back to us.",
+    "stat1Value": "15+",
+    "stat1Label": "Years of Experience",
+    "stat2Value": "5,000+",
+    "stat2Label": "Vehicles Serviced",
+    "stat3Value": "10",
+    "stat3Label": "Specialists on the Team",
+    "stat4Value": "98%",
+    "stat4Label": "Satisfied Customers",
+    "photo1": "Main Workshop Hall",
+    "photo2": "Our Mechanics",
+    "photo3": "Wheel Alignment",
+    "photo4": "Customer Service",
+    "photo5": "office"
+  },
   "services": {
     "sectionTitle": "Our Services",
     "more": "Learn More",
@@ -33,9 +53,7 @@
           "Service interval monitoring"
         ]
       },
-      "suspension": {
-        "title": "Suspension & Brakes – inspection, repair, service"
-      },
+      "suspension": { "title": "Suspension & Brakes – inspection, repair, service" },
       "engine": {
         "title": "Engine – Diagnostics & Repair",
         "slides": [
@@ -44,24 +62,12 @@
           "Engine overhaul"
         ]
       },
-      "steering": {
-        "title": "Steering Rack – Diagnostics & Repair"
-      },
-      "aircon": {
-        "title": "Air Conditioning – Diagnostics, Refill, Repair"
-      },
-      "alignment": {
-        "title": "Wheel Alignment"
-      },
-      "tires": {
-        "title": "Tyre Fitting & Wheel Balancing"
-      },
-      "injector": {
-        "title": "Fuel Injector Cleaning"
-      },
-      "diagnostics": {
-        "title": "Computer Diagnostics"
-      }
+      "steering":    { "title": "Steering Rack – Diagnostics & Repair" },
+      "aircon":      { "title": "Air Conditioning – Diagnostics, Refill, Repair" },
+      "alignment":   { "title": "Wheel Alignment" },
+      "tires":       { "title": "Tyre Fitting & Wheel Balancing" },
+      "injector":    { "title": "Fuel Injector Cleaning" },
+      "diagnostics": { "title": "Computer Diagnostics" }
     }
   },
   "booking": {

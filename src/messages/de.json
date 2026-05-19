@@ -21,6 +21,26 @@
     "contact": "Kontakt",
     "workHours": "Mo–Sa von 9:00 bis 20:00"
   },
+  "about": {
+    "title": "Über uns",
+    "imgAlt": "Werkstatt von innen",
+    "p1": "Unser Unternehmen ist auf die Wartung und Reparatur von Pkw spezialisiert – sowohl Importfahrzeuge als auch Inlandsmodelle. Unsere Fachleute verfügen über langjährige Erfahrung und arbeiten mit modernster Ausrüstung.",
+    "p2": "Qualität und Zuverlässigkeit stehen bei uns an erster Stelle – von der Diagnose bis zur Fertigstellung. Jeder Auftrag wird sorgfältig und nach höchsten Standards ausgeführt.",
+    "p3": "Unser Ziel ist Ihre vollständige Zufriedenheit. Deshalb kommen unsere Kunden immer wieder zu uns zurück.",
+    "stat1Value": "15+",
+    "stat1Label": "Jahre Erfahrung",
+    "stat2Value": "5.000+",
+    "stat2Label": "Fahrzeuge gewartet",
+    "stat3Value": "10",
+    "stat3Label": "Fachleute im Team",
+    "stat4Value": "98%",
+    "stat4Label": "zufriedene Kunden",
+    "photo1": "Haupthalle",
+    "photo2": "Unsere Mechaniker",
+    "photo3": "Achsvermessung",
+    "photo4": "Kundenservice",
+    "photo5": "office"
+  },
   "services": {
     "sectionTitle": "Unsere Leistungen",
     "more": "Mehr erfahren",
@@ -33,9 +53,7 @@
           "Kontrolle der Wartungsintervalle"
         ]
       },
-      "suspension": {
-        "title": "Fahrwerk und Bremssystem – prüfen, reparieren, warten"
-      },
+      "suspension": { "title": "Fahrwerk und Bremssystem – prüfen, reparieren, warten" },
       "engine": {
         "title": "Motor – Diagnose und Reparatur",
         "slides": [
@@ -44,24 +62,12 @@
           "Motorüberholung"
         ]
       },
-      "steering": {
-        "title": "Lenkgetriebe – Diagnose und Reparatur"
-      },
-      "aircon": {
-        "title": "Klimaanlage – Diagnose, Befüllung, Reparatur"
-      },
-      "alignment": {
-        "title": "Spureinstellung und Achsvermessung"
-      },
-      "tires": {
-        "title": "Reifenmontage und Auswuchten"
-      },
-      "injector": {
-        "title": "Einspritzdüsenreinigung"
-      },
-      "diagnostics": {
-        "title": "Computerdiagnose"
-      }
+      "steering":    { "title": "Lenkgetriebe – Diagnose und Reparatur" },
+      "aircon":      { "title": "Klimaanlage – Diagnose, Befüllung, Reparatur" },
+      "alignment":   { "title": "Spureinstellung und Achsvermessung" },
+      "tires":       { "title": "Reifenmontage und Auswuchten" },
+      "injector":    { "title": "Einspritzdüsenreinigung" },
+      "diagnostics": { "title": "Computerdiagnose" }
     }
   },
   "booking": {
