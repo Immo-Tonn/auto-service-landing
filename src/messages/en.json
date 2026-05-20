@@ -84,6 +84,37 @@
     "booked": "Booked",
     "available": "Available"
   },
+  "contactSection": {
+    "headline": "Need quality car repair?",
+    "subheadline": "Our qualified masters will be happy to help you!",
+    "callUs": "Call us:",
+    "phone1": "+49 123 45678901",
+    "phone2": "+49 123 98765401",
+    "orClick": "Or click the button below to book a service or clarify any questions you may have.",
+    "btn": "Contact",
+    "mapAddressLabel": "Our address:",
+    "mapAddressStreet": "Düsseldorfer Str. 67",
+    "mapAddressCity": "10719 Berlin",
+    "mapPhone1": "+49 123 4567890",
+    "mapPhone2": "+40 123 0987654",
+    "mapEmail": "info@autoservice.de",
+    "mapOpenLink": "Open map",
+    "mapDirections": "Get directions",
+    "modal": {
+      "title": "Contact Form",
+      "name": "Name",
+      "email": "Email address",
+      "phone": "Phone",
+      "message": "Your message",
+      "messageHint": "max. 600 characters",
+      "reset": "Reset",
+      "submit": "Submit",
+      "success": "Your message has been sent successfully!",
+      "confirmation": "We will get back to you as soon as possible.",
+      "clickToClose": "Click anywhere to close",
+      "error": "Error. Please try again."
+    }
+  },
   "footer": {
     "tagline1": "Your reliable car service in the region",
     "tagline2": "Quality, trust and speed — for years.",

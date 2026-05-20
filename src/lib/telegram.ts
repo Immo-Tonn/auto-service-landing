@@ -109,6 +109,65 @@ export async function sendCallbackNotification(data: CallbackData) {
   )
 }
 
+// ─── Contact notification ─────────────────────────────────────────────────────
+
+interface ContactData {
+  name: string
+  email: string
+  phone: string
+  message: string
+  locale: string
+}
+
+const contactMessages = {
+  de: (d: ContactData) => `
+✉️ *Neue Kontaktanfrage*
+
+👤 *Name:* ${d.name}
+📧 *E-Mail:* ${d.email}
+📱 *Telefon:* ${d.phone}
+💬 *Nachricht:* ${d.message}
+  `,
+  ru: (d: ContactData) => `
+✉️ *Новое сообщение*
+
+👤 *Имя:* ${d.name}
+📧 *Email:* ${d.email}
+📱 *Телефон:* ${d.phone}
+💬 *Сообщение:* ${d.message}
+  `,
+  en: (d: ContactData) => `
+✉️ *New Contact Request*
+
+👤 *Name:* ${d.name}
+📧 *Email:* ${d.email}
+📱 *Phone:* ${d.phone}
+💬 *Message:* ${d.message}
+  `,
+}
+
+export async function sendContactNotification(data: ContactData) {
+  const lang =
+    (data.locale as keyof typeof contactMessages) in contactMessages
+      ? (data.locale as keyof typeof contactMessages)
+      : 'de'
+
+  const text = contactMessages[lang](data)
+
+  await fetch(
+    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: process.env.TELEGRAM_CHAT_ID,
+        text,
+        parse_mode: 'Markdown',
+      }),
+    }
+  )
+}
+
 // interface BookingData {
 //   firstName: string
 //   lastName: string

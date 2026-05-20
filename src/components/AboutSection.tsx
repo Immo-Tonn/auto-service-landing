@@ -60,6 +60,7 @@ export default function AboutSection() {
               px-8 py-10
               min-[768px]:ml-[35%]
               min-[768px]:px-14 min-[650px]:py-14
+              min-[938px]:h-[460px]
               max-[937px]:h-[447px]
               max-[920px]:h-[435px]
               max-[890px]:h-[420px]

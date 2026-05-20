@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 import HeroButtons from '@/components/HeroButtons'
 import ServicesSection from '@/components/ServicesSection'
 import AboutSection from '@/components/AboutSection'
+import ContactSection from '@/components/ContactSection'
 
 export default function Home() {
   const t = useTranslations()
@@ -67,14 +68,7 @@ export default function Home() {
         <AboutSection/>
 
         {/* ── Contact ───────────────────────────────────────────────────── */}
-        <section id="contact" className="bg-zinc-900 py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-12 text-slate-200">
-              {t('nav.contact')}
-            </h2>
-            {/* Contact info — next stage */}
-          </div>
-        </section>
+        <ContactSection />
 
       </main>
 

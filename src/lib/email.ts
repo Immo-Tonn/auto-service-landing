@@ -79,6 +79,66 @@ const templates = {
   },
 }
 
+interface ContactData {
+  name: string
+  email: string
+  phone: string
+  message: string
+  locale: string
+}
+
+const contactTemplates = {
+  de: {
+    subject: '✉️ Neue Kontaktanfrage',
+    body: (d: ContactData) => `
+      <h2>Neue Kontaktanfrage</h2>
+      <p><strong>Name:</strong> ${d.name}</p>
+      <p><strong>E-Mail:</strong> ${d.email}</p>
+      <p><strong>Telefon:</strong> ${d.phone}</p>
+      <p><strong>Nachricht:</strong></p>
+      <p>${d.message}</p>
+    `,
+  },
+  ru: {
+    subject: '✉️ Новое сообщение с сайта',
+    body: (d: ContactData) => `
+      <h2>Новое сообщение с сайта</h2>
+      <p><strong>Имя:</strong> ${d.name}</p>
+      <p><strong>Email:</strong> ${d.email}</p>
+      <p><strong>Телефон:</strong> ${d.phone}</p>
+      <p><strong>Сообщение:</strong></p>
+      <p>${d.message}</p>
+    `,
+  },
+  en: {
+    subject: '✉️ New Contact Request',
+    body: (d: ContactData) => `
+      <h2>New Contact Request</h2>
+      <p><strong>Name:</strong> ${d.name}</p>
+      <p><strong>Email:</strong> ${d.email}</p>
+      <p><strong>Phone:</strong> ${d.phone}</p>
+      <p><strong>Message:</strong></p>
+      <p>${d.message}</p>
+    `,
+  },
+}
+
+export async function sendContactEmail(data: ContactData) {
+  const lang =
+    (data.locale as keyof typeof contactTemplates) in contactTemplates
+      ? (data.locale as keyof typeof contactTemplates)
+      : 'de'
+  const t = contactTemplates[lang]
+
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM,
+    to: process.env.SMTP_USER,
+    replyTo: data.email,
+    subject: t.subject,
+    html: t.body(data),
+  })
+}
+
 export async function sendBookingEmails(data: BookingData) {
   const lang = (data.locale as keyof typeof templates) in templates
     ? (data.locale as keyof typeof templates)

@@ -84,6 +84,37 @@
     "booked": "Belegt",
     "available": "Verfügbar"
   },
+  "contactSection": {
+    "headline": "Benötigen Sie eine professionelle Autoreparatur?",
+    "subheadline": "Unsere qualifizierten Meister helfen Ihnen gerne!",
+    "callUs": "Rufen Sie uns an:",
+    "phone1": "+49 123 45678901",
+    "phone2": "+49 123 98765401",
+    "orClick": "Oder klicken Sie auf den Button unten, um einen Termin zu buchen oder Ihre Fragen zu klären.",
+    "btn": "Kontakt",
+    "mapAddressLabel": "Unsere Adresse:",
+    "mapAddressStreet": "Düsseldorfer Str. 67",
+    "mapAddressCity": "10719 Berlin",
+    "mapPhone1": "+49 123 4567890",
+    "mapPhone2": "+40 123 0987654",
+    "mapEmail": "info@autoservice.de",
+    "mapOpenLink": "Karte öffnen",
+    "mapDirections": "Route planen",
+    "modal": {
+      "title": "Kontaktformular",
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "message": "Ihre Nachricht",
+      "messageHint": "max. 600 Zeichen",
+      "reset": "Zurücksetzen",
+      "submit": "Absenden",
+      "success": "Ihre Nachricht wurde erfolgreich gesendet!",
+      "confirmation": "Wir melden uns so bald wie möglich bei Ihnen.",
+      "clickToClose": "Klicken Sie irgendwo, um zu schließen",
+      "error": "Fehler. Bitte versuchen Sie es erneut."
+    }
+  },
   "footer": {
     "tagline1": "Ihr zuverlässiger Kfz-Service in der Region",
     "tagline2": "Qualität, Vertrauen und Schnelligkeit — seit Jahren.",
