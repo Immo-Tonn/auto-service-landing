@@ -23,7 +23,7 @@ export default function Home() {
           {/* Hero image */}
           <div className="mt-[-60px]">
             <Image
-              src="/E500_conv.avif"
+              src="/E500.avif"
               alt="Auto Service Workshop"
               width={1920}
               height={1080}
