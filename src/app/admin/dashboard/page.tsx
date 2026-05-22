@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { prisma } from '@/lib/db'
 import { authOptions } from '@/lib/auth'
+import LogoutButton from '@/components/admin/LogoutButton'
 
 type SortField = 'name' | 'date'
 type SortOrder = 'asc' | 'desc'
@@ -52,7 +53,22 @@ export default async function DashboardPage({
           <h1 className="text-2xl font-bold text-slate-800">
             Dashboard — Termine
           </h1>
-          <span className="text-slate-500 text-sm">{session.user?.email}</span>
+          <div className="flex items-center gap-4">
+            <span className="text-slate-500 text-sm">{session.user?.email}</span>
+            <Link
+              href="/admin/change-password"
+              className="text-sm text-slate-500 hover:text-blue-600 transition"
+            >
+              Passwort ändern
+            </Link>
+            <Link
+              href="/admin/delete-account"
+              className="text-sm text-slate-500 hover:text-red-600 transition"
+            >
+              Konto löschen
+            </Link>
+            <LogoutButton />
+          </div>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
