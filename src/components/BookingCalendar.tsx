@@ -44,7 +44,7 @@ export default function BookingCalendar({ onDateSelect, selectedDate, refreshKey
             disabled={!slot.available}
             onClick={() => slot.available && onDateSelect(slot.date)}
             className={`
-              p-3 rounded-lg text-sm font-medium transition border
+              px-1 py-2 rounded-lg text-sm font-medium transition border
               ${!slot.available
                 ? 'bg-slate-100 text-slate-400 cursor-not-allowed border-slate-200'
                 : isSelected

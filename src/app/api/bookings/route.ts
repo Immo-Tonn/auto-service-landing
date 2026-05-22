@@ -40,14 +40,14 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    await sendBookingEmails({
-      firstName,
-      lastName,
-      email,
-      phone,
-      date,
-      locale: locale || 'de',
-    }).catch((err) => console.error('Email error:', err))
+    // await sendBookingEmails({
+    //   firstName,
+    //   lastName,
+    //   email,
+    //   phone,
+    //   date,
+    //   locale: locale || 'de',
+    // }).catch((err) => console.error('Email error:', err))
     
     const notificationData = {
   firstName,
