@@ -59,9 +59,9 @@ export default function AboutSection() {
               bg-white text-zinc-900 flex flex-col justify-center
               px-8 py-10
               min-[768px]:ml-[35%]
-              min-[768px]:px-14 min-[650px]:py-14
+              min-[768px]:px-14 min-[768px]:py-14
               min-[938px]:h-[460px]
-              max-[937px]:h-[447px]
+              max-[938px]:h-[447px]
               max-[920px]:h-[435px]
               max-[890px]:h-[420px]
               max-[875px]:h-[400px]
@@ -89,7 +89,7 @@ export default function AboutSection() {
             style={{ left: '-44%', top: '50%', transform: 'translateY(-50%)', width: '135%' }}
           >
             <Image
-              src="/about_us_123.png"
+              src="/about_us_12.png"
               alt={t('imgAlt')}
               width={520}
               height={680}

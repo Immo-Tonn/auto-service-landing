@@ -21,16 +21,25 @@ export default function Home() {
         <section id="hero" className="bg-black text-white">
 
           {/* Hero image */}
-          <div className="mt-[-60px]">
-            <Image
-              src="/E500.avif"
-              alt="Auto Service Workshop"
-              width={1920}
-              height={1080}
-              priority
-              className="w-full h-auto block"
-            />
-          </div>
+
+          <div
+  className="
+    -translate-y-[30px]
+    sm:-translate-y-[35px]
+    md:-translate-y-[45px]
+    lg:-translate-y-[60px]
+  "
+>
+  <Image
+    src="/E500.avif"
+    alt="Auto Service Workshop"
+    width={1920}
+    height={1080}
+    priority
+    sizes="100vw"
+    className="block h-auto w-full"
+  />
+</div>
 
           {/* Title + subtitle */}
           <div className="

@@ -246,7 +246,7 @@ export default function ContactSection() {
           </div>
           <div className="flex items-start gap-3 mb-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icons/phone_small.svg" alt="" width={20} height={20} className="mt-0.5 shrink-0" />
+            <img src="/icons/phone_orange.svg" alt="" width={24} height={24} className="mt-[-2px] shrink-0" />
             <div>
               <p className="text-white text-sm">{t('mapPhone1')}</p>
               <p className="text-white text-sm">{t('mapPhone2')}</p>

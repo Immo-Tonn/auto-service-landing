@@ -148,7 +148,16 @@ export default function HeroButtons() {
         "
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/icons/calendar.svg" alt="Termin buchen" width={90} height={90} />
+  <img 
+    src="/icons/calendar.svg" 
+    alt="termin buchen" 
+    width={90} 
+    height={90} 
+    className="
+    max-[425px]:w-[60px] max-[425px]:h-[60px]
+    max-[768px]:w-[75px] max-[768px]:h-[75px]" 
+  /> 
+
       </button>
 
       <button
@@ -163,7 +172,14 @@ export default function HeroButtons() {
         "
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/icons/phone.svg" alt="Rückruf anfordern" width={90} height={90} />
+        <img src="/icons/phone.svg" 
+          alt="Rückruf anfordern" 
+          width={90} 
+          height={90}
+          className="
+            max-[425px]:w-[60px] max-[425px]:h-[60px]
+            max-[768px]:w-[75px] max-[768px]:h-[75px]" 
+        /> 
       </button>
 
       {/* ── Modals ──────────────────────────────────────────────────────── */}
