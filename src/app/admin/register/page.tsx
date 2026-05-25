@@ -63,7 +63,7 @@ export default function RegisterPage() {
             placeholder="E-Mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-slate-300 rounded-lg px-4 py-2 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <PasswordInput
             placeholder="Passwort (min. 6 Zeichen)"

@@ -27,3 +27,15 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* Fix pale text on Android Chrome — inputs must not inherit light foreground from dark-mode vars */
+input,
+textarea {
+  color: #1e293b;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}

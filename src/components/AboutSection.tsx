@@ -57,39 +57,42 @@ export default function AboutSection() {
           <div
             className="
               bg-white text-zinc-900 flex flex-col justify-center
-              px-8 py-10
+              px-8 py-8
               min-[768px]:ml-[35%]
-              min-[768px]:px-14 min-[768px]:py-14
-              min-[938px]:h-[460px]
-              max-[938px]:h-[447px]
-              max-[920px]:h-[435px]
-              max-[890px]:h-[420px]
-              max-[875px]:h-[400px]
-              max-[845px]:h-[380px]
-              max-[815px]:h-[375px]
-              max-[500px]:h-[460px]
+              min-[768px]:pl-17
+              min-[768px]:min-h-[440px]
+              min-[768px]:py-3
+              min-[768px]:pr-7 
+              [@media(834px<=width<=880px)]:py-5
+              min-[881px]:py-7
             "
           >
-            <h2 className="pl-4 text-3xl font-bold mb-6
-                           max-[875px]:mb-2 text-zinc-900">{t('title')}</h2>
-            <p className="text-zinc-700 text-base
-                          leading-relaxed mb-4
-                          max-[875px]:leading-snug max-[875px]:mb-2">{t('p1')}</p>
-            <p className="text-zinc-700 text-base
-                          leading-relaxed mb-4
-                          max-[875px]:leading-snug max-[875px]:mb-2">{t('p2')}</p>
-            <p className="text-zinc-700 text-base
-                          leading-relaxed mb-4
-                          max-[875px]:leading-snug">{t('p3')}</p>
+            <h2 className="pl-4 text-3xl font-bold mb-4">{t('title')}</h2>
+            <p className="text-zinc-700 text-base leading-relaxed mb-2">{t('p1')}</p>
+            <p className="text-zinc-700 text-base leading-relaxed mb-2">{t('p2')}</p>
+            <p className="text-zinc-700 text-base leading-relaxed">{t('p3')}</p>
           </div>
 
           {/* Photo — absolute */}
           <div
-            className="absolute z-10 max-[768px]:hidden"
-            style={{ left: '-44%', top: '50%', transform: 'translateY(-50%)', width: '135%' }}
+            className="
+              max-[768px]:hidden absolute z-10 top-1/2 -translate-y-1/2
+              [@media(768px<=width<784px)]:w-[49.5%]
+              [@media(768px<=width<=830px)]:right-[calc(62%_-_68px)]              
+              [@media(784px<=width<825px)]:w-[48.5%]
+              [@media(825px<=width<838px)]:w-[46%]
+              [@media(838px<=width<856px)]:w-[45%]
+              [@media(856px<=width<876px)]:w-[44%]
+              [@media(876px<=width<881px)]:w-[43%]
+              [@media(881px<=width<905px)]:w-[42.5%]
+              [@media(905px<=width<926px)]:w-[41.5%]
+              [@media(926px<=width<946px)]:w-[40.5%]
+              [@media(width>=946px)]:w-[39.5%]
+              min-[821px]:right-[calc(64%_-_68px)]
+            "
           >
             <Image
-              src="/about_us_12.png"
+              src="/about_us_124.png"
               alt={t('imgAlt')}
               width={520}
               height={680}
@@ -212,3 +215,4 @@ export default function AboutSection() {
     </section>
   )
 }
+

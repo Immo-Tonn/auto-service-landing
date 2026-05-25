@@ -18,7 +18,7 @@ export default function PasswordInput({ placeholder, value, onChange }: Props) {
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border border-slate-300 rounded-lg px-4 py-2 pr-11 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full border border-slate-300 rounded-lg px-4 py-2 pr-11 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <button
         type="button"

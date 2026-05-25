@@ -20,6 +20,13 @@ function sortIcon(active: SortField, order: SortOrder, target: SortField) {
   return order === 'asc' ? '↑' : '↓'
 }
 
+const statusClass = (status: string) =>
+  status === 'NEU'
+    ? 'bg-blue-100 text-blue-700'
+    : status === 'IN_ARBEIT'
+    ? 'bg-yellow-100 text-yellow-700'
+    : 'bg-green-100 text-green-700'
+
 export default async function DashboardPage({
   searchParams,
 }: {
@@ -47,23 +54,27 @@ export default async function DashboardPage({
   const iconClass = 'text-slate-400 text-xs'
 
   return (
-    <div className="min-h-screen bg-slate-100 p-8">
+    <div className="min-h-screen bg-slate-100 p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold text-slate-800">
+
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6 md:mb-8">
+          <h1 className="text-xl md:text-2xl font-bold text-slate-800">
             Dashboard — Termine
           </h1>
-          <div className="flex items-center gap-4">
-            <span className="text-slate-500 text-sm">{session.user?.email}</span>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="text-slate-500 text-sm truncate max-w-[200px]">
+              {session.user?.email}
+            </span>
             <Link
               href="/admin/change-password"
-              className="text-sm text-slate-500 hover:text-blue-600 transition"
+              className="text-sm text-slate-500 hover:text-blue-600 transition whitespace-nowrap"
             >
               Passwort ändern
             </Link>
             <Link
               href="/admin/delete-account"
-              className="text-sm text-slate-500 hover:text-red-600 transition"
+              className="text-sm text-slate-500 hover:text-red-600 transition whitespace-nowrap"
             >
               Konto löschen
             </Link>
@@ -71,7 +82,61 @@ export default async function DashboardPage({
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+        {/* Mobile: card list */}
+        <div className="flex min-[576px]:hidden flex-col gap-3">
+
+          {/* Sort controls */}
+          <div className="flex items-center gap-2 text-sm text-slate-500">
+            <span>Sortieren:</span>
+            <Link
+              href={sortHref(sortField, sortOrder, 'date')}
+              className={`flex items-center gap-1 px-3 py-1 rounded-full border transition ${
+                sortField === 'date'
+                  ? 'border-blue-500 text-blue-600 bg-blue-50'
+                  : 'border-slate-300 text-slate-500 bg-white'
+              }`}
+            >
+              Datum
+              <span className="text-xs">{sortIcon(sortField, sortOrder, 'date')}</span>
+            </Link>
+            <Link
+              href={sortHref(sortField, sortOrder, 'name')}
+              className={`flex items-center gap-1 px-3 py-1 rounded-full border transition ${
+                sortField === 'name'
+                  ? 'border-blue-500 text-blue-600 bg-blue-50'
+                  : 'border-slate-300 text-slate-500 bg-white'
+              }`}
+            >
+              Name
+              <span className="text-xs">{sortIcon(sortField, sortOrder, 'name')}</span>
+            </Link>
+          </div>
+
+          {bookings.length === 0 ? (
+            <p className="text-center p-8 text-slate-400">Noch keine Termine</p>
+          ) : (
+            bookings.map((booking) => (
+              <div key={booking.id} className="bg-white rounded-xl shadow-sm p-4">
+                <div className="flex justify-between items-start gap-2 mb-2">
+                  <span className="font-semibold text-slate-800">
+                    {booking.firstName} {booking.lastName}
+                  </span>
+                  <span className={`shrink-0 px-2 py-0.5 rounded-full text-xs font-medium ${statusClass(booking.status)}`}>
+                    {booking.status}
+                  </span>
+                </div>
+                <div className="text-sm text-slate-500 mb-2">
+                  {new Date(booking.date).toLocaleDateString('de-DE')}
+                </div>
+                <div className="text-sm text-slate-600">{booking.email}</div>
+                <div className="text-sm text-slate-400">{booking.phone}</div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Desktop: table */}
+        <div className="hidden min-[576px]:block bg-white rounded-xl shadow-sm overflow-hidden">
           <table className="w-full">
             <thead className="bg-slate-50 border-b">
               <tr>
@@ -112,13 +177,7 @@ export default async function DashboardPage({
                       <div className="text-sm text-slate-400">{booking.phone}</div>
                     </td>
                     <td className="p-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        booking.status === 'NEU'
-                          ? 'bg-blue-100 text-blue-700'
-                          : booking.status === 'IN_ARBEIT'
-                          ? 'bg-yellow-100 text-yellow-700'
-                          : 'bg-green-100 text-green-700'
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusClass(booking.status)}`}>
                         {booking.status}
                       </span>
                     </td>
@@ -128,6 +187,7 @@ export default async function DashboardPage({
             </tbody>
           </table>
         </div>
+
       </div>
     </div>
   )
