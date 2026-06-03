@@ -47,7 +47,10 @@ export default function CallbackForm({ onSuccess }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <input
+        id="callback-name"
+        name="name"
         type="text"
+        autoComplete="name"
         placeholder={t('name')}
         value={form.name}
         onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -61,7 +64,10 @@ export default function CallbackForm({ onSuccess }: Props) {
         "
       />
       <input
+        id="callback-phone"
+        name="phone"
         type="tel"
+        autoComplete="tel"
         placeholder={t('phone')}
         value={form.phone}
         onChange={(e) => setForm({ ...form, phone: e.target.value })}

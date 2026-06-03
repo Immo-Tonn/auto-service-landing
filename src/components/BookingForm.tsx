@@ -109,33 +109,45 @@ export default function BookingForm() {
         <div className="flex flex-col gap-3">
           <div className="grid grid-cols-2 gap-3">
             <input
+              id="booking-firstName"
+              name="firstName"
               type="text"
+              autoComplete="given-name"
               placeholder={t('firstName')}
               value={form.firstName}
               onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-              className="border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-yellow-400 transition-colors duration-200"
             />
             <input
+              id="booking-lastName"
+              name="lastName"
               type="text"
+              autoComplete="family-name"
               placeholder={t('lastName')}
               value={form.lastName}
               onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-              className="border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-yellow-400 transition-colors duration-200"
             />
           </div>
           <input
+            id="booking-email"
+            name="email"
             type="email"
+            autoComplete="email"
             placeholder={t('email')}
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-yellow-400 transition-colors duration-200"
           />
           <input
+            id="booking-phone"
+            name="phone"
             type="tel"
+            autoComplete="tel"
             placeholder={t('phone')}
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-yellow-400 transition-colors duration-200"
           />
 
           {error && (

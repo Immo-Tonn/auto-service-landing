@@ -27,15 +27,33 @@ body {
 html {
   scroll-behavior: smooth;
 }
+/* Fix pale text on Android Chrome — inside @layer base so Tailwind utilities can override it */
+@layer base {
+  input,
+  textarea {
+    color: #1e293b;
+  }
 
-/* Fix pale text on Android Chrome — inputs must not inherit light foreground from dark-mode vars */
-input,
-textarea {
-  color: #1e293b;
-}
+  input::placeholder,
+  textarea::placeholder {
+    color: #94a3b8;
+    opacity: 1;
+  }
 
-input::placeholder,
-textarea::placeholder {
-  color: #94a3b8;
-  opacity: 1;
+  /*
+    Browser autofill override.
+    background-color cannot be overridden on autofill — we fake it with inset box-shadow.
+    -webkit-text-fill-color is used instead of color because browsers ignore `color` on autofill.
+    zinc-900 (#18181b) matches the modal background so the input stays dark during autofill.
+    slate-200 (#e2e8f0) keeps text readable on that dark background.
+  */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #18181b inset !important;
+    -webkit-text-fill-color: #e2e8f0 !important;
+    caret-color: #e2e8f0;
+    transition: background-color 5000s ease-in-out 0s;
+  }
 }

@@ -141,6 +141,7 @@ export default function HeroButtons() {
         aria-label={t('hero.bookingBtn')}
         className="
           fixed bottom-36 left-4 z-50
+          max-[460px]:bottom-18
           rounded-full overflow-hidden cursor-pointer
           shadow-[0_0_15px_4px_rgba(255,255,255,0.6)]
           hover:shadow-[0_0_20px_6px_rgba(250,204,21,0.7)]
@@ -154,7 +155,7 @@ export default function HeroButtons() {
     width={90} 
     height={90} 
     className="
-    max-[425px]:w-[60px] max-[425px]:h-[60px]
+    max-[460px]:w-[60px] max-[460px]:h-[60px]
     max-[768px]:w-[75px] max-[768px]:h-[75px]" 
   /> 
 
@@ -165,6 +166,7 @@ export default function HeroButtons() {
         aria-label={t('hero.callbackBtn')}
         className="
           fixed bottom-36 right-4 z-50
+          max-[460px]:bottom-18
           rounded-full overflow-hidden cursor-pointer
           shadow-[0_0_15px_4px_rgba(255,255,255,0.6)]
           hover:shadow-[0_0_20px_6px_rgba(250,204,21,0.7)]
@@ -177,7 +179,7 @@ export default function HeroButtons() {
           width={90} 
           height={90}
           className="
-            max-[425px]:w-[60px] max-[425px]:h-[60px]
+            max-[460px]:w-[60px] max-[460px]:h-[60px]
             max-[768px]:w-[75px] max-[768px]:h-[75px]" 
         /> 
       </button>

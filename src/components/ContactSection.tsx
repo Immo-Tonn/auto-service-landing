@@ -127,21 +127,30 @@ function ContactForm({ onSuccess }: { onSuccess: () => void }) {
   return (
     <div className="flex flex-col gap-3">
       <input
+        id="contact-name"
+        name="name"
         type="text"
+        autoComplete="name"
         placeholder={t('modal.name')}
         value={form.name}
         onChange={(e) => setForm({ ...form, name: e.target.value })}
         className={inputClass}
       />
       <input
+        id="contact-email"
+        name="email"
         type="email"
+        autoComplete="email"
         placeholder={t('modal.email')}
         value={form.email}
         onChange={(e) => setForm({ ...form, email: e.target.value })}
         className={inputClass}
       />
       <input
+        id="contact-phone"
+        name="phone"
         type="tel"
+        autoComplete="tel"
         placeholder={t('modal.phone')}
         value={form.phone}
         onChange={(e) => setForm({ ...form, phone: e.target.value })}
@@ -149,6 +158,8 @@ function ContactForm({ onSuccess }: { onSuccess: () => void }) {
       />
       <div className="relative">
         <textarea
+          id="contact-message"
+          name="message"
           placeholder={t('modal.message')}
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value.slice(0, 600) })}
