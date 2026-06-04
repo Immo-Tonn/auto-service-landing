@@ -116,7 +116,7 @@ export default async function DashboardPage({
             <p className="text-center p-8 text-slate-400">Noch keine Termine</p>
           ) : (
             bookings.map((booking) => (
-              <div key={booking.id} className="bg-white rounded-xl shadow-sm p-4">
+              <Link key={booking.id} href={`/admin/bookings/${booking.id}`} className="block bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition">
                 <div className="flex justify-between items-start gap-2 mb-2">
                   <span className="font-semibold text-slate-800">
                     {booking.firstName} {booking.lastName}
@@ -130,7 +130,7 @@ export default async function DashboardPage({
                 </div>
                 <div className="text-sm text-slate-600">{booking.email}</div>
                 <div className="text-sm text-slate-400">{booking.phone}</div>
-              </div>
+              </Link>
             ))
           )}
         </div>
@@ -166,8 +166,10 @@ export default async function DashboardPage({
               ) : (
                 bookings.map((booking) => (
                   <tr key={booking.id} className="border-b hover:bg-slate-50">
-                    <td className="p-4 text-slate-800">
-                      {booking.firstName} {booking.lastName}
+                    <td className="p-4">
+                      <Link href={`/admin/bookings/${booking.id}`} className="block text-slate-800 hover:text-blue-600 transition">
+                        {booking.firstName} {booking.lastName}
+                      </Link>
                     </td>
                     <td className="p-4 text-slate-600">
                       {new Date(booking.date).toLocaleDateString('de-DE')}

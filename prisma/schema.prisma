@@ -13,17 +13,53 @@ datasource db {
 }
 
 model Booking {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   firstName   String
   lastName    String
   email       String
   phone       String
-  date        DateTime @unique
-  status      Status   @default(NEU)
+  date        DateTime    @unique
+  status      Status      @default(NEU)
   repairCost  Float?
-  locale      String   @default("de")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  locale      String      @default("de")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  repairCard  RepairCard?
+}
+
+model RepairCard {
+  id            String     @id @default(cuid())
+  bookingId     String     @unique
+  booking       Booking    @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  licensePlate  String     @default("")
+  ownerFirst    String     @default("")
+  ownerLast     String     @default("")
+  vatPercent    Float      @default(19)
+  invoiceNumber String?    @unique
+  invoicedAt    DateTime?
+  workItems     WorkItem[]
+  partItems     PartItem[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+model WorkItem {
+  id           String     @id @default(cuid())
+  repairCardId String
+  repairCard   RepairCard @relation(fields: [repairCardId], references: [id], onDelete: Cascade)
+  description  String
+  price        Float?
+  position     Int        @default(0)
+}
+
+model PartItem {
+  id           String     @id @default(cuid())
+  repairCardId String
+  repairCard   RepairCard @relation(fields: [repairCardId], references: [id], onDelete: Cascade)
+  description  String
+  quantity     Int        @default(1)
+  price        Float?
+  position     Int        @default(0)
 }
 
 enum Status {
