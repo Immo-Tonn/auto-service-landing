@@ -93,7 +93,7 @@ export default function BookingForm() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 dark-form">
       <div>
         <h3 className="text-lg font-semibold text-slate-700 mb-3">
           {t('selectDate')}

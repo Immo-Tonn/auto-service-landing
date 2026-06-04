@@ -44,15 +44,21 @@ export default function LoginPage() {
           </div>
         )}
 
-        <div className="flex flex-col gap-4">
+        <div id="admin-login-form" className="flex flex-col gap-4">
           <input
+            id="admin-email"
+            name="email"
             type="email"
+            autoComplete="email"
             placeholder="E-Mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="border border-slate-300 rounded-lg px-4 py-2 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <PasswordInput
+            id="admin-password"
+            name="password"
+            autoComplete="current-password"
             placeholder="Passwort"
             value={password}
             onChange={setPassword}

@@ -45,7 +45,7 @@ export default function CallbackForm({ onSuccess }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 dark-form">
       <input
         id="callback-name"
         name="name"

@@ -41,19 +41,39 @@ html {
   }
 
   /*
-    Browser autofill override.
-    background-color cannot be overridden on autofill — we fake it with inset box-shadow.
-    -webkit-text-fill-color is used instead of color because browsers ignore `color` on autofill.
-    zinc-900 (#18181b) matches the modal background so the input stays dark during autofill.
-    slate-200 (#e2e8f0) keeps text readable on that dark background.
+    Autofill override — light (default, e.g. admin login form).
+    background-color cannot be overridden on autofill — faked with inset box-shadow.
+    -webkit-text-fill-color is required because browsers ignore plain `color` on autofill.
   */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #1e293b !important;
+    caret-color: #1e293b;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /* Autofill override — dark (forms inside dark zinc-900 modals). */
+  .dark-form input:-webkit-autofill,
+  .dark-form input:-webkit-autofill:hover,
+  .dark-form input:-webkit-autofill:focus,
+  .dark-form input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 1000px #18181b inset !important;
     -webkit-text-fill-color: #e2e8f0 !important;
     caret-color: #e2e8f0;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /* Autofill override — admin login form (ID selector wins over any class rule). */
+  #admin-login-form input:-webkit-autofill,
+  #admin-login-form input:-webkit-autofill:hover,
+  #admin-login-form input:-webkit-autofill:focus,
+  #admin-login-form input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #1e293b !important;
+    caret-color: #1e293b;
     transition: background-color 5000s ease-in-out 0s;
   }
 }

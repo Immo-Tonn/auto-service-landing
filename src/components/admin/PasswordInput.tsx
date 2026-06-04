@@ -6,14 +6,20 @@ interface Props {
   placeholder: string
   value: string
   onChange: (v: string) => void
+  id?: string
+  name?: string
+  autoComplete?: string
 }
 
-export default function PasswordInput({ placeholder, value, onChange }: Props) {
+export default function PasswordInput({ placeholder, value, onChange, id, name, autoComplete }: Props) {
   const [visible, setVisible] = useState(false)
 
   return (
     <div className="relative">
       <input
+        id={id}
+        name={name}
+        autoComplete={autoComplete}
         type={visible ? 'text' : 'password'}
         placeholder={placeholder}
         value={value}

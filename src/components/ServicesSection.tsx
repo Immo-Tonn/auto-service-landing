@@ -61,7 +61,6 @@ function ServiceCard({ id, hasSlides, onClick }: { id: string; hasSlides: boolea
     </div>
   </div>
 
-  {/* Полоска — шире карточки, ярче */}
   <div
     style={{
       height: '7px',

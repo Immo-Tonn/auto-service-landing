@@ -125,7 +125,7 @@ function ContactForm({ onSuccess }: { onSuccess: () => void }) {
     'w-full bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition-colors duration-200'
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 dark-form">
       <input
         id="contact-name"
         name="name"
