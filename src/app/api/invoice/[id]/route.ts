@@ -68,8 +68,9 @@ export async function GET(
     // ── Header ──────────────────────────────────────────────────────────
     doc.fontSize(18).font('Helvetica-Bold').fillColor(dark).text(COMPANY.name, 55, 55)
     doc.fontSize(9).font('Helvetica').fillColor(gray)
-      .text(`${COMPANY.street}  |  ${COMPANY.city}`, 55, 80)
-      .text(`Tel: ${COMPANY.phone}  |  ${COMPANY.email}  |  USt-IdNr: ${COMPANY.taxId}`, 55, 93)
+      .text(COMPANY.owner, 55, 80)
+      .text(`${COMPANY.street}  |  ${COMPANY.city}`, 55, 91)
+      .text(`Tel: ${COMPANY.phone}  |  ${COMPANY.email}  |  USt-IdNr: ${COMPANY.taxId}`, 55, 102)
 
     // ── Invoice block (top-right) ────────────────────────────────────────
     const rightX = 55 + pageW - 150
@@ -80,10 +81,10 @@ export async function GET(
       .text(`Datum: ${invoiceDate}`, rightX, 83, { width: 150, align: 'right' })
 
     // ── Divider ──────────────────────────────────────────────────────────
-    doc.moveTo(55, 112).lineTo(55 + pageW, 112).strokeColor(line).lineWidth(1).stroke()
+    doc.moveTo(55, 120).lineTo(55 + pageW, 120).strokeColor(line).lineWidth(1).stroke()
 
     // ── Client info ──────────────────────────────────────────────────────
-    doc.y = 124
+    doc.y = 132
     doc.fontSize(9).font('Helvetica-Bold').fillColor(gray).text('KUNDE', 55)
     doc.fontSize(10).font('Helvetica').fillColor(dark)
       .text(`${card.ownerFirst} ${card.ownerLast}`, 55)
