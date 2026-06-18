@@ -145,19 +145,24 @@ export async function sendBookingEmails(data: BookingData) {
     : 'de'
   const t = templates[lang]
 
-  // Email клиенту
-  await transporter.sendMail({
-    from: process.env.SMTP_FROM,
-    to: data.email,
-    subject: t.clientSubject,
-    html: t.clientBody(data),
-  })
+  const results = await Promise.allSettled([
+    transporter.sendMail({
+      from: process.env.SMTP_FROM,
+      to: data.email,
+      subject: t.clientSubject,
+      html: t.clientBody(data),
+    }),
+    transporter.sendMail({
+      from: process.env.SMTP_FROM,
+      to: process.env.SMTP_USER,
+      subject: t.adminSubject,
+      html: t.adminBody(data),
+    }),
+  ])
 
-  // Email админу
-  await transporter.sendMail({
-    from: process.env.SMTP_FROM,
-    to: process.env.SMTP_USER,
-    subject: t.adminSubject,
-    html: t.adminBody(data),
+  results.forEach((result, i) => {
+    if (result.status === 'rejected') {
+      console.error(`Email error [${i === 0 ? 'client' : 'admin'}]:`, result.reason)
+    }
   })
 }
