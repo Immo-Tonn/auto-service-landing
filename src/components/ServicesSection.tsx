@@ -32,32 +32,30 @@ function ServiceCard({ id, hasSlides, onClick }: { id: string; hasSlides: boolea
     <Wrapper
   {...(hasSlides ? { type: 'button', onClick } : {})}
   className={`
-    group relative flex flex-col
+    group relative flex flex-col w-full max-w-[16.25rem]
     transition-transform duration-300
     ${hasSlides ? 'cursor-pointer hover:-translate-y-1' : 'cursor-default opacity-60'}
   `}
 >
   {/* Карточка — градиент ярче и теплее */}
   <div
-    className="rounded-sm flex flex-col flex-1"
+    className="rounded-sm flex flex-col flex-1 min-h-[17.5rem]"
     style={{
       background:
         'linear-gradient(170deg, #090909 0%, #1c1200 28%, #4a3000 56%, #7a5000 78%, #9a6800 100%)',
-      minHeight: '280px',
-      width: '260px',
     }}
   >
     <div className="flex flex-col flex-1 px-6 pt-8 pb-5">
       <div className="flex-1 flex items-center justify-center">
         <h3
-          className="text-white font-bold text-center uppercase text-[11px] sm:text-xs lg:text-[13px] tracking-[0.13em] leading-[1.9]"
+          className="text-white font-bold text-center uppercase text-[0.8125rem] tracking-[0.13em] leading-[1.9]"
           style={{ textShadow: '0 0 22px rgba(255,255,255,0.4)' }}
         >
           {t(`cards.${id}.title`)}
         </h3>
       </div>
       <div className="text-center mt-5">
-        <span className="text-[9px] tracking-[0.3em] uppercase font-medium transition-colors duration-300 text-yellow-600/60 group-hover:text-yellow-400/90">
+        <span className="text-xs tracking-[0.2em] uppercase font-semibold transition-colors duration-300 text-yellow-500/90 group-hover:text-yellow-300 group-focus-visible:text-yellow-300">
           {t('more')}
         </span>
       </div>
@@ -190,7 +188,7 @@ export default function ServicesSection() {
   return (
     <section id="services" className="bg-zinc-950 py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center text-white mb-14 tracking-wide">
+        <h2 className="text-section font-bold text-center text-white mb-14 tracking-wide">
           {t('sectionTitle')}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 justify-items-center">

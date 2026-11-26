@@ -154,7 +154,7 @@ export default function ContactSection() {
       {/* ── Upper CTA block ─────────────────────────────────────────────── */}
       <div className="bg-zinc-950 py-16 px-4 text-center">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+          <h2 className="text-section font-bold text-white mb-3">
             {t('headline')}
           </h2>
           <p className="text-yellow-400 font-bold text-lg sm:text-xl mb-8">

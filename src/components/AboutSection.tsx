@@ -103,19 +103,21 @@ export default function AboutSection() {
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-800 mt-12 rounded-lg overflow-hidden">
-          {STATS.map(({ valueKey, labelKey }) => (
-            <div key={valueKey} className="bg-zinc-900 flex flex-col items-center justify-center py-8 px-4 text-center">
-              <span className="text-4xl lg:text-5xl font-black text-yellow-400 leading-none"
-                style={{ textShadow: '0 0 25px rgba(250,204,21,0.4)' }}>
-                {t(valueKey)}
-              </span>
-              <span className="text-slate-400 text-sm mt-2 uppercase tracking-wider">
-                {t(labelKey)}
-              </span>
-            </div>
-          ))}
+        {/* Stats — 4 columns as soon as the block itself is wide enough */}
+        <div className="@container mt-12">
+          <dl className="grid grid-cols-2 @3xl:grid-cols-4 gap-px bg-zinc-800 rounded-lg overflow-hidden">
+            {STATS.map(({ valueKey, labelKey }) => (
+              <div key={valueKey} className="bg-zinc-900 flex flex-col-reverse items-center justify-end py-8 px-4 text-center">
+                <dt className="text-slate-400 text-sm mt-2 uppercase tracking-wider">
+                  {t(labelKey)}
+                </dt>
+                <dd className="text-stat font-black text-yellow-400 leading-none"
+                  style={{ textShadow: '0 0 25px rgba(250,204,21,0.4)' }}>
+                  {t(valueKey)}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
 
         {/* Gallery */}

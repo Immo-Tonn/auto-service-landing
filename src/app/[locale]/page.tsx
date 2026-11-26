@@ -60,13 +60,13 @@ export default function Home({
           ">
             <h1 className="
               font-bold mb-4 leading-tight
-              text-2xl sm:text-3xl md:text-4xl lg:text-4xl
+              text-hero
             ">
               {t('hero.title')}
             </h1>
             <p className="
               text-slate-300
-              text-sm sm:text-base md:text-lg lg:text-xl
+              text-hero-sub
             ">
               {t('hero.subtitle')}
             </p>
