@@ -126,7 +126,8 @@ function SliderModal({ serviceId, slides, onClose }: { serviceId: string; slides
         className="relative w-full max-w-3xl bg-zinc-900 border border-zinc-700 rounded-xl overflow-hidden shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <button onClick={onClose}
+        {/* TODO(i18n, block 7): move aria-labels to messages */}
+        <button type="button" onClick={onClose} aria-label="Schließen"
           className="absolute top-3 right-4 z-10 text-slate-400 hover:text-yellow-400 text-3xl leading-none transition-colors duration-200">
           ×
         </button>
@@ -159,18 +160,18 @@ function SliderModal({ serviceId, slides, onClose }: { serviceId: string; slides
           </AnimatePresence>
 
           {current > 0 && (
-            <button onClick={prev}
+            <button type="button" onClick={prev} aria-label="Vorheriges Bild"
               className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-yellow-400/90 text-white hover:text-zinc-900 flex items-center justify-center transition-colors duration-200">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <svg aria-hidden="true" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <polyline points="15 18 9 12 15 6" />
               </svg>
             </button>
           )}
 
           {current < slides.length - 1 && (
-            <button onClick={next}
+            <button type="button" onClick={next} aria-label="Nächstes Bild"
               className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-yellow-400/90 text-white hover:text-zinc-900 flex items-center justify-center transition-colors duration-200">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <svg aria-hidden="true" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </button>
@@ -183,7 +184,8 @@ function SliderModal({ serviceId, slides, onClose }: { serviceId: string; slides
           </p>
           <div className="flex justify-center gap-2 mt-3">
             {slides.map((_, i) => (
-              <button key={i} onClick={() => goTo(i, i > current ? 1 : -1)}
+              <button key={i} type="button" onClick={() => goTo(i, i > current ? 1 : -1)}
+                aria-current={i === current ? 'true' : undefined}
                 className={`rounded-full transition-all duration-200 ${i === current ? 'w-5 h-2 bg-yellow-400' : 'w-2 h-2 bg-zinc-600 hover:bg-zinc-400'}`}
                 aria-label={`Bild ${i + 1}`} />
             ))}

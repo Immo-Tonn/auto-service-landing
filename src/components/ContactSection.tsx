@@ -64,8 +64,8 @@ function SuccessOverlay({ message, confirmation, clickToClose, onClose }: Succes
       className="fixed inset-0 z-[90] flex items-center justify-center bg-black/60 cursor-pointer"
       onClick={onClose}
     >
-      <div className="bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl px-10 py-10 text-center max-w-sm mx-4">
-        <div className="text-5xl mb-4">✅</div>
+      <div role="status" aria-live="polite" className="bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl px-10 py-10 text-center max-w-sm mx-4">
+        <div className="text-5xl mb-4" aria-hidden="true">✅</div>
         <p className="text-slate-200 text-base font-semibold">{message}</p>
         <p className="text-slate-400 text-sm mt-2">{confirmation}</p>
         <p className="text-xs text-slate-500 mt-4">{clickToClose}</p>
@@ -95,7 +95,8 @@ function ContactForm({ onSuccess }: { onSuccess: () => void }) {
     setError('')
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault()
     if (!isValid) return
     setLoading(true)
     setError('')
@@ -122,12 +123,14 @@ function ContactForm({ onSuccess }: { onSuccess: () => void }) {
   }
 
   const inputClass =
-    'w-full bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition-colors duration-200'
+    'w-full bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded px-4 py-3 text-sm focus:border-yellow-400 focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-yellow-400 transition-colors duration-200'
 
   return (
-    <div className="flex flex-col gap-3 dark-form">
+    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-3 dark-form">
+      <label htmlFor="contact-name" className="sr-only">{t('modal.name')}</label>
       <input
         id="contact-name"
+        required
         name="name"
         type="text"
         autoComplete="name"
@@ -136,8 +139,10 @@ function ContactForm({ onSuccess }: { onSuccess: () => void }) {
         onChange={(e) => setForm({ ...form, name: e.target.value })}
         className={inputClass}
       />
+      <label htmlFor="contact-email" className="sr-only">{t('modal.email')}</label>
       <input
         id="contact-email"
+        required
         name="email"
         type="email"
         autoComplete="email"
@@ -146,8 +151,10 @@ function ContactForm({ onSuccess }: { onSuccess: () => void }) {
         onChange={(e) => setForm({ ...form, email: e.target.value })}
         className={inputClass}
       />
+      <label htmlFor="contact-phone" className="sr-only">{t('modal.phone')}</label>
       <input
         id="contact-phone"
+        required
         name="phone"
         type="tel"
         autoComplete="tel"
@@ -157,8 +164,10 @@ function ContactForm({ onSuccess }: { onSuccess: () => void }) {
         className={inputClass}
       />
       <div className="relative">
+        <label htmlFor="contact-message" className="sr-only">{t('modal.message')}</label>
         <textarea
           id="contact-message"
+          required
           name="message"
           placeholder={t('modal.message')}
           value={form.message}
@@ -171,24 +180,25 @@ function ContactForm({ onSuccess }: { onSuccess: () => void }) {
         </span>
       </div>
 
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {error && <p role="alert" className="text-red-400 text-sm">{error}</p>}
 
       <div className="flex gap-3 mt-1">
         <button
+          type="button"
           onClick={handleReset}
           className="flex-1 border border-slate-500 text-slate-400 font-medium py-2.5 px-4 rounded hover:border-slate-300 hover:text-slate-200 transition-colors duration-200"
         >
           {t('modal.reset')}
         </button>
         <button
-          onClick={handleSubmit}
+          type="submit"
           disabled={!isValid || loading}
           className="flex-1 border-2 border-yellow-400 text-yellow-400 font-bold py-2.5 px-4 rounded uppercase tracking-wider hover:bg-yellow-400 hover:text-zinc-900 disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-200"
         >
           {loading ? '...' : t('modal.submit')}
         </button>
       </div>
-    </div>
+    </form>
   )
 }
 

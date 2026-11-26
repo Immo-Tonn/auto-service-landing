@@ -29,6 +29,17 @@ html {
 }
 /* Fix pale text on Android Chrome — inside @layer base so Tailwind utilities can override it */
 @layer base {
+  /* Visible keyboard focus for all interactive elements (Baseline Widely Available) */
+  :focus-visible {
+    outline: 2px solid var(--color-yellow-400);
+    outline-offset: 2px;
+  }
+
+  /* Anchor targets are not hidden under the sticky 64px header */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
   input,
   textarea {
     color: #1e293b;

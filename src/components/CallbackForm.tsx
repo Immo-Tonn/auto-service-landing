@@ -18,7 +18,8 @@ export default function CallbackForm({ onSuccess }: Props) {
 
   const isValid = form.name.trim() && form.phone.trim()
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault()
     if (!isValid) return
     setLoading(true)
     setError('')
@@ -45,9 +46,11 @@ export default function CallbackForm({ onSuccess }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-4 dark-form">
+    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4 dark-form">
+      <label htmlFor="callback-name" className="sr-only">{t('name')}</label>
       <input
         id="callback-name"
+        required
         name="name"
         type="text"
         autoComplete="name"
@@ -59,12 +62,15 @@ export default function CallbackForm({ onSuccess }: Props) {
           border border-slate-500
           text-slate-200 placeholder-slate-500
           rounded px-4 py-3 text-sm
-          focus:outline-none focus:border-yellow-400
+          focus:border-yellow-400
+          focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-yellow-400
           transition-colors duration-200
         "
       />
+      <label htmlFor="callback-phone" className="sr-only">{t('phone')}</label>
       <input
         id="callback-phone"
+        required
         name="phone"
         type="tel"
         autoComplete="tel"
@@ -76,17 +82,18 @@ export default function CallbackForm({ onSuccess }: Props) {
           border border-slate-500
           text-slate-200 placeholder-slate-500
           rounded px-4 py-3 text-sm
-          focus:outline-none focus:border-yellow-400
+          focus:border-yellow-400
+          focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-yellow-400
           transition-colors duration-200
         "
       />
 
       {error && (
-        <p className="text-red-400 text-sm">{error}</p>
+        <p role="alert" className="text-red-400 text-sm">{error}</p>
       )}
 
       <button
-        onClick={handleSubmit}
+        type="submit"
         disabled={!isValid || loading}
         className="
           self-start
@@ -101,6 +108,6 @@ export default function CallbackForm({ onSuccess }: Props) {
       >
         {loading ? '...' : t('submit')}
       </button>
-    </div>
+    </form>
   )
 }

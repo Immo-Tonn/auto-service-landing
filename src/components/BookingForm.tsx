@@ -33,7 +33,8 @@ export default function BookingForm() {
     setError('')
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault()
     if (!isValid) return
     setLoading(true)
     setError('')
@@ -82,8 +83,8 @@ export default function BookingForm() {
         className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 cursor-pointer"
         onClick={handleClose}
       >
-        <div className="bg-white rounded-2xl shadow-xl px-10 py-10 text-center max-w-sm mx-4">
-          <div className="text-5xl mb-4">✅</div>
+        <div role="status" aria-live="polite" className="bg-white rounded-2xl shadow-xl px-10 py-10 text-center max-w-sm mx-4">
+          <div className="text-5xl mb-4" aria-hidden="true">✅</div>
           <h3 className="text-xl font-bold text-slate-800 mb-2">{t('success')}</h3>
           <p className="text-slate-500">{t('confirmation')}</p>
           <p className="text-xs text-slate-400 mt-4">Klicken Sie irgendwo, um zu schließen</p>
@@ -106,70 +107,79 @@ export default function BookingForm() {
       </div>
 
       {selectedDate && (
-        <div className="flex flex-col gap-3">
+        <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-3">
           <div className="grid grid-cols-2 gap-3">
+            <label htmlFor="booking-firstName" className="sr-only">{t('firstName')}</label>
             <input
               id="booking-firstName"
+              required
               name="firstName"
               type="text"
               autoComplete="given-name"
               placeholder={t('firstName')}
               value={form.firstName}
               onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-              className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-yellow-400 transition-colors duration-200"
+              className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:border-yellow-400 focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-yellow-400 transition-colors duration-200"
             />
+            <label htmlFor="booking-lastName" className="sr-only">{t('lastName')}</label>
             <input
               id="booking-lastName"
+              required
               name="lastName"
               type="text"
               autoComplete="family-name"
               placeholder={t('lastName')}
               value={form.lastName}
               onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-              className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-yellow-400 transition-colors duration-200"
+              className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:border-yellow-400 focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-yellow-400 transition-colors duration-200"
             />
           </div>
+          <label htmlFor="booking-email" className="sr-only">{t('email')}</label>
           <input
             id="booking-email"
+            required
             name="email"
             type="email"
             autoComplete="email"
             placeholder={t('email')}
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-yellow-400 transition-colors duration-200"
+            className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:border-yellow-400 focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-yellow-400 transition-colors duration-200"
           />
+          <label htmlFor="booking-phone" className="sr-only">{t('phone')}</label>
           <input
             id="booking-phone"
+            required
             name="phone"
             type="tel"
             autoComplete="tel"
             placeholder={t('phone')}
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-yellow-400 transition-colors duration-200"
+            className="bg-transparent border border-slate-500 text-slate-200 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:border-yellow-400 focus-visible:outline-1 focus-visible:outline-offset-0 focus-visible:outline-yellow-400 transition-colors duration-200"
           />
 
           {error && (
-            <div className="text-red-500 text-sm">{error}</div>
+            <div role="alert" className="text-red-500 text-sm">{error}</div>
           )}
 
           <div className="flex gap-3">
             <button
+              type="button"
               onClick={handleReset}
               className="flex-1 border border-slate-300 text-slate-600 font-medium py-2 px-4 rounded-lg hover:bg-slate-50 transition"
             >
               {t('reset')}
             </button>
             <button
-              onClick={handleSubmit}
+              type="submit"
               disabled={!isValid || loading}
               className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold py-2 px-4 rounded-lg transition"
             >
               {loading ? 'Laden...' : t('submit')}
             </button>
           </div>
-        </div>
+        </form>
       )}
     </div>
   )

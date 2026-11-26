@@ -76,8 +76,8 @@ function SuccessOverlay({ message, onClose }: { message: string; onClose: () => 
       className="fixed inset-0 z-[90] flex items-center justify-center bg-black/60 cursor-pointer"
       onClick={onClose}
     >
-      <div className="bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl px-10 py-10 text-center max-w-sm mx-4">
-        <div className="text-5xl mb-4">✅</div>
+      <div role="status" aria-live="polite" className="bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl px-10 py-10 text-center max-w-sm mx-4">
+        <div className="text-5xl mb-4" aria-hidden="true">✅</div>
         <p className="text-slate-200 text-base">{message}</p>
         <p className="text-xs text-slate-500 mt-4">Klicken Sie irgendwo, um zu schließen</p>
       </div>
@@ -151,7 +151,7 @@ export default function HeroButtons() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
   <img 
     src="/icons/calendar.svg" 
-    alt="termin buchen" 
+    alt="" 
     width={90} 
     height={90} 
     className="
@@ -175,7 +175,7 @@ export default function HeroButtons() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/icons/phone.svg" 
-          alt="Rückruf anfordern" 
+          alt="" 
           width={90} 
           height={90}
           className="

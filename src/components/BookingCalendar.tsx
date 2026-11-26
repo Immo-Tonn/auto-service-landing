@@ -41,6 +41,8 @@ export default function BookingCalendar({ onDateSelect, selectedDate, refreshKey
         return (
           <button
             key={slot.date}
+            type="button"
+            aria-pressed={slot.available ? isSelected : undefined}
             disabled={!slot.available}
             onClick={() => slot.available && onDateSelect(slot.date)}
             className={`
