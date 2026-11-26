@@ -27,7 +27,8 @@
     "pdfkit": "^0.18.0",
     "prisma": "^7.8.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "vanilla-cookieconsent": "^3.3.0"
   },
   "overrides": {
     "nodemailer": "^9.0.3"

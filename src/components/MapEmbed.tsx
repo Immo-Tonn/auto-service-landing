@@ -3,18 +3,18 @@
 //
 // Google Maps behind a click (two-click solution for DSGVO):
 // nothing is requested from Google until the visitor clicks "Karte laden".
-// Optional "remember" stores the choice in localStorage; "Karte ausblenden"
-// withdraws it again (withdrawal must be as easy as consent).
+// "Künftig automatisch laden" grants the "external" category of the cookie
+// banner; "Karte ausblenden" withdraws it (withdrawal as easy as consent).
 //
 // Uses the official Maps Embed API when NEXT_PUBLIC_GOOGLE_MAPS_KEY is set
 // (free, unlimited; restrict the key to your domains in Google Cloud),
 // otherwise falls back to the keyless embed URL.
 
-import { useState, useSyncExternalStore } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
+import { EXTERNAL, isAccepted, setCategory, subscribeConsent } from './cookie/consent'
 
-const STORAGE_KEY = 'consent:google-maps'
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY
 
 function mapSrc(address: string, locale: string) {
@@ -24,29 +24,7 @@ function mapSrc(address: string, locale: string) {
     : `https://www.google.com/maps?q=${q}&z=16&hl=${locale}&output=embed`
 }
 
-function readConsent() {
-  try { return localStorage.getItem(STORAGE_KEY) === 'granted' } catch { return false }
-}
-
-// Tiny external store over localStorage (also syncs between tabs)
-const listeners = new Set<() => void>()
-
-function subscribe(cb: () => void) {
-  listeners.add(cb)
-  window.addEventListener('storage', cb)
-  return () => {
-    listeners.delete(cb)
-    window.removeEventListener('storage', cb)
-  }
-}
-
-function writeConsent(granted: boolean) {
-  try {
-    if (granted) localStorage.setItem(STORAGE_KEY, 'granted')
-    else localStorage.removeItem(STORAGE_KEY)
-  } catch { /* storage unavailable (private mode etc.) — consent lasts for this visit only */ }
-  listeners.forEach((cb) => cb())
-}
+const readConsent = () => isAccepted(EXTERNAL)
 
 interface Props {
   address: string
@@ -58,20 +36,27 @@ interface Props {
 export default function MapEmbed({ address, title, placeholderClassName = '' }: Props) {
   const t = useTranslations('contactSection')
   const locale = useLocale()
-  // Remembered consent (server snapshot = false, so SSR always renders the placeholder)
-  const remembered = useSyncExternalStore(subscribe, readConsent, () => false)
+  // Consent from the cookie banner (server snapshot = false, so SSR always renders the placeholder)
+  const remembered = useSyncExternalStore(subscribeConsent, readConsent, () => false)
   // Consent for this visit only
   const [loadedNow, setLoadedNow] = useState(false)
   const [remember, setRemember] = useState(false)
   const loaded = remembered || loadedNow
 
+  // Consent withdrawn in the cookie settings: also drop the one-off load
+  useEffect(() => {
+    const onChange = () => { if (!readConsent()) setLoadedNow(false) }
+    window.addEventListener('cc:onChange', onChange)
+    return () => window.removeEventListener('cc:onChange', onChange)
+  }, [])
+
   const load = () => {
-    if (remember) writeConsent(true)
+    if (remember) setCategory(EXTERNAL, true)
     setLoadedNow(true)
   }
 
   const hide = () => {
-    writeConsent(false)
+    if (remembered) setCategory(EXTERNAL, false)
     setRemember(false)
     setLoadedNow(false)
   }

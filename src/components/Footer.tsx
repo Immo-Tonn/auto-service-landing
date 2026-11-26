@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
+import CookieSettingsButton from '@/components/cookie/CookieSettingsButton'
 
 // ─── SVG Icons ────────────────────────────────────────────────────────────────
 
@@ -112,6 +113,12 @@ export default function Footer() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <CookieSettingsButton
+                    label={t('legal.cookies')}
+                    className="text-sm text-slate-400 hover:text-yellow-400 transition-colors duration-200 cursor-pointer"
+                  />
+                </li>
               </ul>
 
               {/* Social icons */}

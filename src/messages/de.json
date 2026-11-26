@@ -166,7 +166,8 @@
     "legal": {
       "title": "Rechtliches",
       "privacy": "Datenschutz",
-      "legalNotice": "Impressum"
+      "legalNotice": "Impressum",
+      "cookies": "Cookie-Einstellungen"
     },
     "contact": {
       "title": "Kontakte",
@@ -190,7 +191,7 @@
       },
       "cookies": {
         "title": "Cookies und Reichweitenmessung",
-        "body": "Diese Website setzt ausschließlich technisch notwendige Cookies ein. Eine Analyse des Nutzerverhaltens findet nicht statt."
+        "body": "Diese Website setzt technisch notwendige Cookies ein, u. a. um Ihre Cookie-Auswahl zu speichern. Externe Medien (Google Maps) werden nur mit Ihrer Einwilligung geladen. Ihre Auswahl können Sie jederzeit über „Cookie-Einstellungen“ im Fußbereich ändern oder widerrufen. Eine Analyse des Nutzerverhaltens findet nicht statt."
       },
       "maps": {
         "title": "Google Maps",

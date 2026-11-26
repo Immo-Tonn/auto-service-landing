@@ -1,4 +1,5 @@
 import { NextIntlClientProvider } from 'next-intl'
+import CookieConsent from '@/components/cookie/CookieConsent'
 import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
@@ -60,6 +61,7 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           {children}
+          <CookieConsent />
         </NextIntlClientProvider>
       </body>
     </html>

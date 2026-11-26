@@ -166,7 +166,8 @@
     "legal": {
       "title": "Legal",
       "privacy": "Privacy Policy",
-      "legalNotice": "Legal Notice"
+      "legalNotice": "Legal Notice",
+      "cookies": "Cookie settings"
     },
     "contact": {
       "title": "Contacts",
@@ -190,7 +191,7 @@
       },
       "cookies": {
         "title": "Cookies and analytics",
-        "body": "This website uses strictly necessary cookies only. No analysis of user behaviour takes place."
+        "body": "This website uses strictly necessary cookies, for example to store your cookie choice. External media (Google Maps) are loaded only with your consent. You can change or withdraw your choice at any time via “Cookie settings” in the footer. No analysis of user behaviour takes place."
       },
       "maps": {
         "title": "Google Maps",
