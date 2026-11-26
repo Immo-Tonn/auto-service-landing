@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 const nextConfig: NextConfig = {
   output: "standalone",
   devIndicators: false,
-  allowedDevOrigins: ['172.21.208.1', '192.168.188.50'],
+  allowedDevOrigins: ['172.21.208.1', '192.168.188.50', '192.168.1.4'],
   // PDFKit uses dynamic require() for font data — must not be bundled by webpack
   serverExternalPackages: ['pdfkit'],
   // next-auth/react reads NEXTAUTH_URL at module load time in the browser bundle too;
