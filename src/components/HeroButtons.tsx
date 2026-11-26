@@ -3,87 +3,12 @@
 
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { motion, AnimatePresence } from 'framer-motion'
 import BookingForm from './BookingForm'
 import CallbackForm from './CallbackForm'
+import Dialog from './ui/Dialog'
+import SuccessDialog from './ui/SuccessDialog'
 
 type ModalType = 'booking' | 'callback' | null
-
-// ─── Reusable modal shell ──────────────────────────────────────────────────────
-
-interface ModalProps {
-  onClose: () => void
-  title: string
-  children: React.ReactNode
-}
-
-function Modal({ onClose, title, children }: ModalProps) {
-  return (
-    <motion.div
-      key="backdrop"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 16 }}
-        animate={{ opacity: 1, scale: 1,    y: 0  }}
-        exit={{    opacity: 0, scale: 0.95, y: 16 }}
-        transition={{ duration: 0.25 }}
-        className="
-          relative w-full max-w-lg
-          bg-zinc-900 border border-zinc-700
-          rounded-xl shadow-2xl
-          p-8
-        "
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="
-            absolute top-4 right-4
-            text-slate-500 hover:text-yellow-400
-            text-2xl leading-none transition-colors duration-200
-          "
-          aria-label="Schließen"
-        >
-          ×
-        </button>
-
-        {/* Title */}
-        <h2 className="text-xl font-bold text-slate-100 mb-6">
-          {title}
-        </h2>
-
-        {children}
-      </motion.div>
-    </motion.div>
-  )
-}
-
-// ─── Success overlay ───────────────────────────────────────────────────────────
-
-function SuccessOverlay({ message, onClose }: { message: string; onClose: () => void }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[90] flex items-center justify-center bg-black/60 cursor-pointer"
-      onClick={onClose}
-    >
-      <div role="status" aria-live="polite" className="bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl px-10 py-10 text-center max-w-sm mx-4">
-        <div className="text-5xl mb-4" aria-hidden="true">✅</div>
-        <p className="text-slate-200 text-base">{message}</p>
-        <p className="text-xs text-slate-500 mt-4">Klicken Sie irgendwo, um zu schließen</p>
-      </div>
-    </motion.div>
-  )
-}
 
 // ─── Main component ────────────────────────────────────────────────────────────
 
@@ -92,6 +17,7 @@ export default function HeroButtons() {
 
   const [modal, setModal]           = useState<ModalType>(null)
   const [callbackSuccess, setCallbackSuccess] = useState(false)
+  const [bookingSuccess, setBookingSuccess]   = useState(false)
 
   const closeModal = () => setModal(null)
 
@@ -184,48 +110,49 @@ export default function HeroButtons() {
         /> 
       </button>
 
-      {/* ── Modals ──────────────────────────────────────────────────────── */}
-      <AnimatePresence>
+      {/* ── Modals (native <dialog>) ────────────────────────────────────── */}
+      <Dialog
+        open={modal === 'booking'}
+        onClose={closeModal}
+        title={t('booking.title')}
+      >
+        <BookingForm
+          onSuccess={() => {
+            closeModal()
+            setBookingSuccess(true)
+            setTimeout(() => setBookingSuccess(false), 5000)
+          }}
+        />
+      </Dialog>
 
-        {/* Booking modal */}
-        {modal === 'booking' && (
-          <Modal
-            key="booking-modal"
-            onClose={closeModal}
-            title={t('booking.title')}
-          >
-            {/* BookingForm управляет своим success-overlay самостоятельно */}
-            <BookingForm />
-          </Modal>
-        )}
+      <Dialog
+        open={modal === 'callback'}
+        onClose={closeModal}
+        title={t('callback.title')}
+      >
+        <CallbackForm
+          onSuccess={() => {
+            closeModal()
+            setCallbackSuccess(true)
+            setTimeout(() => setCallbackSuccess(false), 4000)
+          }}
+        />
+      </Dialog>
 
-        {/* Callback modal */}
-        {modal === 'callback' && (
-          <Modal
-            key="callback-modal"
-            onClose={closeModal}
-            title={t('callback.title')}
-          >
-            <CallbackForm
-              onSuccess={() => {
-                closeModal()
-                setCallbackSuccess(true)
-                setTimeout(() => setCallbackSuccess(false), 4000)
-              }}
-            />
-          </Modal>
-        )}
+      <SuccessDialog
+        open={bookingSuccess}
+        onClose={() => setBookingSuccess(false)}
+        message={t('booking.success')}
+        confirmation={t('booking.confirmation')}
+        clickToClose={t('contactSection.modal.clickToClose')}
+      />
 
-        {/* Callback success overlay */}
-        {callbackSuccess && (
-          <SuccessOverlay
-            key="callback-success"
-            message={t('callback.success')}
-            onClose={() => setCallbackSuccess(false)}
-          />
-        )}
-
-      </AnimatePresence>
+      <SuccessDialog
+        open={callbackSuccess}
+        onClose={() => setCallbackSuccess(false)}
+        message={t('callback.success')}
+        clickToClose={t('contactSection.modal.clickToClose')}
+      />
     </>
   )
 }

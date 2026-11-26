@@ -1,10 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import BookingCalendar from './BookingCalendar'
 
-export default function BookingForm() {
+interface Props {
+  onSuccess: () => void
+}
+
+export default function BookingForm({ onSuccess }: Props) {
   const t = useTranslations('booking')
   const locale = useLocale()
 
@@ -16,9 +20,7 @@ export default function BookingForm() {
     phone: '',
   })
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
-  const [calendarKey, setCalendarKey] = useState(0)
 
   const isValid =
     selectedDate &&
@@ -52,8 +54,7 @@ export default function BookingForm() {
         return
       }
 
-      setSuccess(true)
-      setCalendarKey((k) => k + 1)
+      onSuccess()
     } catch {
       setError('Netzwerkfehler. Bitte versuchen Sie es erneut.')
     } finally {
@@ -61,48 +62,16 @@ export default function BookingForm() {
     }
   }
 
-  const handleClose = () => {
-    setSuccess(false)
-    handleReset()
-  }
-
-  useEffect(() => {
-    if (!success) return
-    const timer = setTimeout(() => {
-      setSuccess(false)
-      setForm({ firstName: '', lastName: '', email: '', phone: '' })
-      setSelectedDate(null)
-      setError('')
-    }, 5000)
-    return () => clearTimeout(timer)
-  }, [success])
-
-  if (success) {
-    return (
-      <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 cursor-pointer"
-        onClick={handleClose}
-      >
-        <div role="status" aria-live="polite" className="bg-white rounded-2xl shadow-xl px-10 py-10 text-center max-w-sm mx-4">
-          <div className="text-5xl mb-4" aria-hidden="true">✅</div>
-          <h3 className="text-xl font-bold text-slate-800 mb-2">{t('success')}</h3>
-          <p className="text-slate-500">{t('confirmation')}</p>
-          <p className="text-xs text-slate-400 mt-4">Klicken Sie irgendwo, um zu schließen</p>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="flex flex-col gap-6 dark-form">
       <div>
-        <h3 className="text-lg font-semibold text-slate-700 mb-3">
+        <h3 className="text-lg font-semibold text-slate-300 mb-3">
           {t('selectDate')}
         </h3>
         <BookingCalendar
           onDateSelect={setSelectedDate}
           selectedDate={selectedDate}
-          refreshKey={calendarKey}
+          refreshKey={0}
         />
       </div>
 
@@ -167,14 +136,14 @@ export default function BookingForm() {
             <button
               type="button"
               onClick={handleReset}
-              className="flex-1 border border-slate-300 text-slate-600 font-medium py-2 px-4 rounded-lg hover:bg-slate-50 transition"
+              className="flex-1 border border-slate-500 text-slate-300 font-medium py-2 px-4 rounded-lg hover:border-slate-300 hover:text-slate-100 transition-colors"
             >
               {t('reset')}
             </button>
             <button
               type="submit"
               disabled={!isValid || loading}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold py-2 px-4 rounded-lg transition"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-zinc-700 disabled:text-slate-400 text-white font-bold py-2 px-4 rounded-lg transition"
             >
               {loading ? 'Laden...' : t('submit')}
             </button>

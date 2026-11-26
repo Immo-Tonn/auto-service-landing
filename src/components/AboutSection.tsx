@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
+import Dialog from './ui/Dialog'
 
 const STATS = [
   { valueKey: 'stat1Value', labelKey: 'stat1Label' },
@@ -22,6 +23,8 @@ const GALLERY = [
 export default function AboutSection() {
   const t = useTranslations('about')
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const openLightbox = (index: number) => { setLightboxIndex(index); setLightboxOpen(true) }
   const touchStartX = useRef<number>(0)
 
   const goNext = () =>
@@ -43,7 +46,6 @@ export default function AboutSection() {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowRight') goNext()
     if (e.key === 'ArrowLeft')  goPrev()
-    if (e.key === 'Escape')     setLightboxIndex(null)
   }
 
   return (
@@ -121,11 +123,12 @@ export default function AboutSection() {
           className="flex gap-3 mt-3 overflow-x-auto pb-2 snap-x snap-mandatory"
         >
           {GALLERY.map(({ src, alt }, index) => (
-            <div
+            <button
+              type="button"
               key={src}
               className="relative flex-shrink-0 overflow-hidden rounded-sm group cursor-pointer snap-start"
               style={{ height: '220px', width: '280px' }}
-              onClick={() => setLightboxIndex(index)}
+              onClick={() => openLightbox(index)}
             >
               <Image
                 src={src}
@@ -134,40 +137,29 @@ export default function AboutSection() {
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 sizes="280px"
               />
-              <div className="absolute inset-0 bg-black/50 flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div aria-hidden="true" className="absolute inset-0 bg-black/50 flex items-end opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300">
                 <span className="text-white text-xs font-medium tracking-wide uppercase px-3 pb-3">
                   {t(alt)}
                 </span>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
       </div>
 
-      {/* Lightbox */}
-      {lightboxIndex !== null && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
-          onClick={() => setLightboxIndex(null)}
-          onKeyDown={handleKeyDown}
-          tabIndex={-1}
-        >
-          <div
-            className="relative w-full max-w-4xl mx-4 select-none"
-            onClick={e => e.stopPropagation()}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
-            {/* Close */}
-            <button
-              onClick={() => setLightboxIndex(null)}
-              className="absolute -top-10 right-0 text-white text-4xl leading-none z-10 hover:text-yellow-400 transition-colors"
-              aria-label="Close"
-            >
-              &times;
-            </button>
-
+      {/* Lightbox (native <dialog>) */}
+      <Dialog
+        open={lightboxOpen && lightboxIndex !== null}
+        onClose={() => setLightboxOpen(false)}
+        ariaLabel={lightboxIndex !== null ? t(GALLERY[lightboxIndex].alt) : undefined}
+        onKeyDown={handleKeyDown}
+        backdropClassName="bg-black/90"
+        panelClassName="relative w-full max-w-4xl mt-12 select-none"
+        closeClassName="absolute -top-10 right-0 text-white text-4xl leading-none z-10 hover:text-yellow-400 transition-colors"
+      >
+        {lightboxIndex !== null && (
+          <div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
             {/* Image */}
             <div className="relative w-full" style={{ height: 'min(75vh, 600px)' }}>
               <Image
@@ -181,7 +173,8 @@ export default function AboutSection() {
 
             {/* Prev */}
             <button
-              onClick={e => { e.stopPropagation(); goPrev() }}
+              type="button"
+              onClick={goPrev}
               className="absolute left-2 top-1/2 -translate-y-1/2
                          bg-black/60 hover:bg-yellow-400 text-white hover:text-zinc-900
                          w-10 h-10 rounded-full flex items-center justify-center
@@ -193,7 +186,8 @@ export default function AboutSection() {
 
             {/* Next */}
             <button
-              onClick={e => { e.stopPropagation(); goNext() }}
+              type="button"
+              onClick={goNext}
               className="absolute right-2 top-1/2 -translate-y-1/2
                          bg-black/60 hover:bg-yellow-400 text-white hover:text-zinc-900
                          w-10 h-10 rounded-full flex items-center justify-center
@@ -208,8 +202,8 @@ export default function AboutSection() {
               {lightboxIndex + 1} / {GALLERY.length}
             </p>
           </div>
-        </div>
-      )}
+        )}
+      </Dialog>
     </section>
   )
 }

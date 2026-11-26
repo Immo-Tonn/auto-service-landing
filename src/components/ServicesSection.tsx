@@ -4,6 +4,7 @@
 import { useState, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { motion, AnimatePresence } from 'framer-motion'
+import Dialog from './ui/Dialog'
 
 const SERVICES = [
   {
@@ -25,9 +26,11 @@ const SERVICES = [
 
 function ServiceCard({ id, hasSlides, onClick }: { id: string; hasSlides: boolean; onClick: () => void }) {
   const t = useTranslations('services')
+  // Clickable cards are real buttons (keyboard + screen readers)
+  const Wrapper: React.ElementType = hasSlides ? 'button' : 'div'
   return (
-    <div
-  onClick={hasSlides ? onClick : undefined}
+    <Wrapper
+  {...(hasSlides ? { type: 'button', onClick } : {})}
   className={`
     group relative flex flex-col
     transition-transform duration-300
@@ -73,11 +76,11 @@ function ServiceCard({ id, hasSlides, onClick }: { id: string; hasSlides: boolea
       borderRadius: '0 0 4px 4px',
     }}
   />
-</div>
+</Wrapper>
  )
 }
 
-function SliderModal({ serviceId, slides, onClose }: { serviceId: string; slides: string[]; onClose: () => void }) {
+function SliderContent({ serviceId, slides }: { serviceId: string; slides: string[] }) {
   const t = useTranslations('services')
   const captions = t.raw(`cards.${serviceId}.slides`) as string[]
   const [current, setCurrent] = useState(0)
@@ -114,24 +117,7 @@ function SliderModal({ serviceId, slides, onClose }: { serviceId: string; slides
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 px-4"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.25 }}
-        className="relative w-full max-w-3xl bg-zinc-900 border border-zinc-700 rounded-xl overflow-hidden shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* TODO(i18n, block 7): move aria-labels to messages */}
-        <button type="button" onClick={onClose} aria-label="Schließen"
-          className="absolute top-3 right-4 z-10 text-slate-400 hover:text-yellow-400 text-3xl leading-none transition-colors duration-200">
-          ×
-        </button>
-
+    <>
         <div
           className="relative overflow-hidden"
           style={{ height: '420px' }}
@@ -191,14 +177,14 @@ function SliderModal({ serviceId, slides, onClose }: { serviceId: string; slides
             ))}
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+    </>
   )
 }
 
 export default function ServicesSection() {
   const t = useTranslations('services')
   const [activeId, setActiveId] = useState<string | null>(null)
+  const [sliderOpen, setSliderOpen] = useState(false)
   const activeService = SERVICES.find((s) => s.id === activeId)
 
   return (
@@ -211,16 +197,22 @@ export default function ServicesSection() {
           {SERVICES.map((service) => (
             <ServiceCard key={service.id} id={service.id}
               hasSlides={service.slides.length > 0}
-              onClick={() => setActiveId(service.id)} />
+              onClick={() => { setActiveId(service.id); setSliderOpen(true) }} />
           ))}
         </div>
       </div>
-      <AnimatePresence>
-        {activeId && activeService && activeService.slides.length > 0 && (
-          <SliderModal key={activeId} serviceId={activeId}
-            slides={activeService.slides} onClose={() => setActiveId(null)} />
+      <Dialog
+        open={sliderOpen && !!activeService}
+        onClose={() => setSliderOpen(false)}
+        ariaLabel={activeService ? t(`cards.${activeService.id}.title`) : undefined}
+        backdropClassName="bg-black/50"
+        panelClassName="relative w-full max-w-3xl bg-zinc-900 border border-zinc-700 rounded-xl overflow-hidden shadow-2xl"
+        closeClassName="absolute top-3 right-4 z-10 text-slate-400 hover:text-yellow-400 text-3xl leading-none transition-colors duration-200"
+      >
+        {activeService && activeService.slides.length > 0 && (
+          <SliderContent key={activeService.id} serviceId={activeService.id} slides={activeService.slides} />
         )}
-      </AnimatePresence>
+      </Dialog>
     </section>
   )
 }

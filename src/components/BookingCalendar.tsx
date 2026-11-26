@@ -48,7 +48,7 @@ export default function BookingCalendar({ onDateSelect, selectedDate, refreshKey
             className={`
               px-1 py-2 rounded-lg text-sm font-medium transition border
               ${!slot.available
-                ? 'bg-slate-100 text-slate-400 cursor-not-allowed border-slate-200'
+                ? 'bg-zinc-800 text-slate-500 cursor-not-allowed border-zinc-700'
                 : isSelected
                 ? 'bg-blue-600 text-white border-blue-600'
                 : 'bg-[#000111] text-slate-300 border border-slate-400 hover:border-blue-200 hover:border-2 cursor-pointer'

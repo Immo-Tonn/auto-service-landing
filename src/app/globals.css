@@ -40,6 +40,11 @@ html {
     scroll-margin-top: 5rem;
   }
 
+  /* No page scroll behind an open modal <dialog> (:has() is Widely Available) */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
   input,
   textarea {
     color: #1e293b;

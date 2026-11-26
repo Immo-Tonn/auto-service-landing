@@ -3,76 +3,8 @@
 
 import { useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { motion, AnimatePresence } from 'framer-motion'
-
-// ─── Modal shell ───────────────────────────────────────────────────────────────
-
-interface ModalProps {
-  onClose: () => void
-  title: string
-  children: React.ReactNode
-}
-
-function Modal({ onClose, title, children }: ModalProps) {
-  return (
-    <motion.div
-      key="backdrop"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 16 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 16 }}
-        transition={{ duration: 0.25 }}
-        className="relative w-full max-w-lg bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl p-8"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-slate-500 hover:text-yellow-400 text-2xl leading-none transition-colors duration-200"
-          aria-label="Schließen"
-        >
-          ×
-        </button>
-        <h2 className="text-xl font-bold text-slate-100 mb-6">{title}</h2>
-        {children}
-      </motion.div>
-    </motion.div>
-  )
-}
-
-// ─── Success overlay ───────────────────────────────────────────────────────────
-
-interface SuccessProps {
-  message: string
-  confirmation: string
-  clickToClose: string
-  onClose: () => void
-}
-
-function SuccessOverlay({ message, confirmation, clickToClose, onClose }: SuccessProps) {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[90] flex items-center justify-center bg-black/60 cursor-pointer"
-      onClick={onClose}
-    >
-      <div role="status" aria-live="polite" className="bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl px-10 py-10 text-center max-w-sm mx-4">
-        <div className="text-5xl mb-4" aria-hidden="true">✅</div>
-        <p className="text-slate-200 text-base font-semibold">{message}</p>
-        <p className="text-slate-400 text-sm mt-2">{confirmation}</p>
-        <p className="text-xs text-slate-500 mt-4">{clickToClose}</p>
-      </div>
-    </motion.div>
-  )
-}
+import Dialog from './ui/Dialog'
+import SuccessDialog from './ui/SuccessDialog'
 
 // ─── Contact form ──────────────────────────────────────────────────────────────
 
@@ -300,27 +232,22 @@ export default function ContactSection() {
         </div>
       </div>
 
-      {/* ── Modal + success overlay ──────────────────────────────────────── */}
-      <AnimatePresence>
-        {modalOpen && (
-          <Modal
-            key="contact-modal"
-            onClose={() => setModalOpen(false)}
-            title={t('modal.title')}
-          >
-            <ContactForm onSuccess={handleSuccess} />
-          </Modal>
-        )}
-        {success && (
-          <SuccessOverlay
-            key="contact-success"
-            message={t('modal.success')}
-            confirmation={t('modal.confirmation')}
-            clickToClose={t('modal.clickToClose')}
-            onClose={() => setSuccess(false)}
-          />
-        )}
-      </AnimatePresence>
+      {/* ── Modal + success (native <dialog>) ──────────────────────────── */}
+      <Dialog
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title={t('modal.title')}
+      >
+        <ContactForm onSuccess={handleSuccess} />
+      </Dialog>
+
+      <SuccessDialog
+        open={success}
+        onClose={() => setSuccess(false)}
+        message={t('modal.success')}
+        confirmation={t('modal.confirmation')}
+        clickToClose={t('modal.clickToClose')}
+      />
     </section>
   )
 }
