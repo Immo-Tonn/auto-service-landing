@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useRouter, usePathname } from '@/i18n/navigation'
+import Dialog from './ui/Dialog'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -99,20 +100,33 @@ export default function Header() {
 
   const [menuOpen, setMenuOpen] = useState(false)
 
+  // Section to scroll to once the menu has finished closing
+  const pendingHash = useRef<string | null>(null)
+
   // Close menu when viewport becomes desktop-sized
+  // (page scroll lock is handled globally: html:has(dialog[open]))
   useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth >= 900) setMenuOpen(false)
-    }
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
+    const mq = window.matchMedia('(min-width: 900px)')
+    const onChange = (e: MediaQueryListEvent) => { if (e.matches) setMenuOpen(false) }
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
   }, [])
 
-  // Lock body scroll while mobile menu is open
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [menuOpen])
+  // Anchor links inside the modal menu: close first, then scroll,
+  // otherwise the open <dialog> (inert page + scroll lock) swallows the jump
+  const goToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    pendingHash.current = href
+    setMenuOpen(false)
+  }
+
+  const scrollToPending = () => {
+    const hash = pendingHash.current
+    pendingHash.current = null
+    if (!hash) return
+    document.querySelector(hash)?.scrollIntoView()
+    history.pushState(null, '', hash)
+  }
 
   const switchLocale = (next: Locale) => {
     router.push(pathname, { locale: next })
@@ -216,132 +230,115 @@ export default function Header() {
       </header>
 
       {/* ── MOBILE MENU ───────────────────────────────────────────────────── */}
-      <AnimatePresence>
-        {menuOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              key="backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-[60] bg-black/60 "
-              onClick={() => setMenuOpen(false)}
-            />
+      <Dialog
+        id="mobile-menu"
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        onAfterClose={scrollToPending}
+        ariaLabel={tf('nav.title')}
+        closeLabel="Menü schließen"
+        centered={false}
+        backdropClassName="bg-black/60"
+        panelMotion={{
+          initial: { x: '100%' },
+          animate: { x: 0 },
+          exit: { x: '100%' },
+          transition: { type: 'tween', duration: 0.3, ease: 'easeInOut' },
+        }}
+        panelClassName="
+          fixed top-0 right-0 w-72 max-h-dvh overflow-y-auto
+          bg-[#1c1408]
+          rounded-l-2xl shadow-2xl
+          flex flex-col p-6
+          border-l border-yellow-900/40
+        "
+        closeClassName="
+          absolute top-5 right-6
+          text-slate-400 hover:text-yellow-400
+          transition-colors text-3xl leading-none
+        "
+      >
+          {/* Panel header (close button is rendered by <Dialog>) */}
+          <div className="mb-10">
+            <Logo small />
+          </div>
 
-            {/* Slide-in panel */}
-            <motion.aside
-              key="panel"
-              id="mobile-menu"
-              aria-label={tf('nav.title')}
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.3, ease: 'easeInOut' }}
-              className="
-                fixed top-0 right-0 h-auto w-72
-                z-[70] bg-[#1c1408]
-                rounded-l-2xl shadow-2xl
-                flex flex-col p-6
-                border-l border-yellow-900/40
-              "
-            >
-              {/* Panel header */}
-              <div className="flex items-start justify-between mb-10">
-                <Logo small />
-                <button
-                  type="button"
-                  onClick={() => setMenuOpen(false)}
-                  className="
-                    text-slate-400 hover:text-yellow-400
-                    transition-colors text-3xl leading-none mt-[-2px]
-                  "
-                  aria-label="Menü schließen"
-                >
-                  ×
-                </button>
-              </div>
-
-              {/* Nav links */}
-              <nav className="flex flex-col gap-5 flex-1">
-                {NAV_ITEMS.map(({ key, href }, i) => (
-                  <motion.a
-                    key={key}
-                    href={href}
-                    onClick={() => setMenuOpen(false)}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.05 * i + 0.1 }}
-                    className="
-                      text-slate-200 hover:text-yellow-400
-                      text-base font-medium
-                      transition-colors duration-200
-                      border-b border-zinc-800 pb-4
-                    "
-                  >
-                    {t(key)}
-                  </motion.a>
-                ))}
-              </nav>
-
-              {/* Language switcher */}
-              <motion.div
-                className="flex gap-5 mt-6 mb-5"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
+          {/* Nav links */}
+          <nav className="flex flex-col gap-5 flex-1">
+            {NAV_ITEMS.map(({ key, href }, i) => (
+              <motion.a
+                key={key}
+                href={href}
+                onClick={(e) => goToSection(e, href)}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * i + 0.1 }}
+                className="
+                  text-slate-200 hover:text-yellow-400
+                  text-base font-medium
+                  transition-colors duration-200
+                  border-b border-zinc-800 pb-4
+                "
               >
-                {LOCALES.map((loc) => (
-                  <button
-                    key={loc}
-                    type="button"
-                    onClick={() => switchLocale(loc)}
-                    aria-current={locale === loc ? 'true' : undefined}
-                    className={`
-                      font-bold uppercase text-sm tracking-widest transition-colors duration-200
-                      ${locale === loc
-                        ? 'text-yellow-400'
-                        : 'text-slate-500 hover:text-slate-300'}
-                    `}
-                  >
-                    {loc}
-                  </button>
-                ))}
-              </motion.div>
+                {t(key)}
+              </motion.a>
+            ))}
+          </nav>
 
-              {/* Social icons */}
-              <motion.div
-                className="flex gap-3"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.35 }}
+          {/* Language switcher */}
+          <motion.div
+            className="flex gap-5 mt-6 mb-5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            {LOCALES.map((loc) => (
+              <button
+                key={loc}
+                type="button"
+                onClick={() => switchLocale(loc)}
+                aria-current={locale === loc ? 'true' : undefined}
+                className={`
+                  font-bold uppercase text-sm tracking-widest transition-colors duration-200
+                  ${locale === loc
+                    ? 'text-yellow-400'
+                    : 'text-slate-500 hover:text-slate-300'}
+                `}
               >
-                {[
-                  { Icon: TelegramIcon,  href: '#', label: 'Telegram'  },
-                  { Icon: InstagramIcon, href: '#', label: 'Instagram' },
-                  { Icon: FacebookIcon,  href: '#', label: 'Facebook'  },
-                ].map(({ Icon, href, label }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    className="
-                      w-10 h-10 rounded-full
-                      bg-yellow-500/15 text-yellow-500
-                      flex items-center justify-center
-                      hover:bg-yellow-500/30 hover:text-yellow-300
-                      transition-colors duration-200
-                    "
-                  >
-                    <Icon />
-                  </a>
-                ))}
-              </motion.div>
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
+                {loc}
+              </button>
+            ))}
+          </motion.div>
+
+          {/* Social icons */}
+          <motion.div
+            className="flex gap-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.35 }}
+          >
+            {[
+              { Icon: TelegramIcon,  href: '#', label: 'Telegram'  },
+              { Icon: InstagramIcon, href: '#', label: 'Instagram' },
+              { Icon: FacebookIcon,  href: '#', label: 'Facebook'  },
+            ].map(({ Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="
+                  w-10 h-10 rounded-full
+                  bg-yellow-500/15 text-yellow-500
+                  flex items-center justify-center
+                  hover:bg-yellow-500/30 hover:text-yellow-300
+                  transition-colors duration-200
+                "
+              >
+                <Icon />
+              </a>
+            ))}
+          </motion.div>
+      </Dialog>
     </>
   )
 }

@@ -8,10 +8,20 @@
 // open until the exit animation has finished.
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, type HTMLMotionProps } from 'framer-motion'
+
+type PanelMotion = Pick<HTMLMotionProps<'div'>, 'initial' | 'animate' | 'exit' | 'transition'>
+
+const DEFAULT_MOTION: PanelMotion = {
+  initial: { opacity: 0, scale: 0.95, y: 16 },
+  animate: { opacity: 1, scale: 1, y: 0 },
+  exit: { opacity: 0, scale: 0.95, y: 16 },
+  transition: { duration: 0.25 },
+}
 
 interface DialogProps {
   open: boolean
+  id?: string
   onClose: () => void
   /** Visible heading; also used as the accessible name. */
   title?: string
@@ -26,6 +36,12 @@ interface DialogProps {
   closeClassName?: string
   closeLabel?: string
   onKeyDown?: (e: KeyboardEvent<HTMLDialogElement>) => void
+  /** Custom enter/exit animation of the panel (e.g. slide-in drawer). */
+  panelMotion?: PanelMotion
+  /** Center the panel in the viewport (default). Off for drawers. */
+  centered?: boolean
+  /** Runs after the exit animation, once the <dialog> is closed. */
+  onAfterClose?: () => void
 }
 
 const DEFAULT_PANEL =
@@ -35,6 +51,7 @@ const DEFAULT_CLOSE =
 
 export default function Dialog({
   open,
+  id,
   onClose,
   title,
   ariaLabel,
@@ -44,6 +61,9 @@ export default function Dialog({
   closeClassName = DEFAULT_CLOSE,
   closeLabel = 'Schließen', // TODO(i18n, block 7)
   onKeyDown,
+  panelMotion = DEFAULT_MOTION,
+  centered = true,
+  onAfterClose,
 }: DialogProps) {
   const ref = useRef<HTMLDialogElement>(null)
   const titleId = useId()
@@ -62,6 +82,7 @@ export default function Dialog({
   return (
     <dialog
       ref={ref}
+      id={id}
       aria-labelledby={title ? titleId : undefined}
       aria-label={title ? undefined : ariaLabel}
       // Escape: let the exit animation play instead of closing instantly
@@ -85,6 +106,7 @@ export default function Dialog({
         onExitComplete={() => {
           ref.current?.close()
           setMounted(false)
+          onAfterClose?.()
         }}
       >
         {open && (
@@ -102,11 +124,8 @@ export default function Dialog({
         {open && (
           <motion.div
             key="panel"
-            initial={{ opacity: 0, scale: 0.95, y: 16 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 16 }}
-            transition={{ duration: 0.25 }}
-            className={`m-auto ${panelClassName}`}
+            {...panelMotion}
+            className={`${centered ? 'm-auto ' : ''}${panelClassName}`}
           >
             <button
               type="button"
