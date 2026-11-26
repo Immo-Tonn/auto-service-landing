@@ -75,29 +75,23 @@ export default function AboutSection() {
             <p className="text-zinc-700 text-base leading-relaxed">{t('p3')}</p>
           </div>
 
-          {/* Photo — absolute */}
+          {/* Photo — absolute, overlaps the white card.
+              Fixed width 22.5rem; right edge follows a linear fit of the old
+              layout (container 720px -> 344px, 900px -> 394px).
+              Replaces 12 pixel-tuned media queries. */}
           <div
             className="
               max-[768px]:hidden absolute z-10 top-1/2 -translate-y-1/2
-              [@media(768px<=width<784px)]:w-[49.5%]
-              [@media(768px<=width<=830px)]:right-[calc(62%_-_68px)]              
-              [@media(784px<=width<825px)]:w-[48.5%]
-              [@media(825px<=width<838px)]:w-[46%]
-              [@media(838px<=width<856px)]:w-[45%]
-              [@media(856px<=width<876px)]:w-[44%]
-              [@media(876px<=width<881px)]:w-[43%]
-              [@media(881px<=width<905px)]:w-[42.5%]
-              [@media(905px<=width<926px)]:w-[41.5%]
-              [@media(926px<=width<946px)]:w-[40.5%]
-              [@media(width>=946px)]:w-[39.5%]
-              min-[821px]:right-[calc(64%_-_68px)]
+              right-[calc(72%-8.875rem)]
+              w-[22.5rem]
             "
           >
             <Image
               src="/about_us_124.png"
               alt={t('imgAlt')}
-              width={520}
-              height={680}
+              width={398}
+              height={564}
+              sizes="360px"
               className="w-full h-auto block"
             />
           </div>
