@@ -3,12 +3,25 @@
     "title": "AutoService — Car Repair Shop | Repair, Maintenance, Diagnostics",
     "description": "Car service for repair, maintenance and diagnostics. Book an appointment online or request a callback. Mon–Sat, 9:00 to 20:00."
   },
+  "common": {
+    "close": "Close",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "toHome": "AutoService — to homepage",
+    "skipToContent": "Skip to content",
+    "prevImage": "Previous image",
+    "nextImage": "Next image",
+    "imageN": "Image {n}",
+    "loading": "Loading…",
+    "networkError": "Network error. Please try again."
+  },
   "hero": {
     "title": "Your Auto Experts — Safe, Fast and Reliable",
     "subtitle": "Inspection, repair or MOT — we'll get your car back on the road",
     "cta": "Book a Service",
     "bookingBtn": "Book a Service",
-    "callbackBtn": "Request a Callback"
+    "callbackBtn": "Request a Callback",
+    "imgAlt": "Car in our workshop"
   },
   "callback": {
     "title": "Callback Information",
@@ -43,7 +56,7 @@
     "photo2": "Our Mechanics",
     "photo3": "Wheel Alignment",
     "photo4": "Customer Service",
-    "photo5": "office"
+    "photo5": "Office"
   },
   "services": {
     "sectionTitle": "Our Services",
@@ -100,7 +113,8 @@
     "success": "Your appointment has been booked!",
     "confirmation": "You will receive a confirmation by email",
     "booked": "Booked",
-    "available": "Available"
+    "available": "Available",
+    "error": "Booking failed"
   },
   "contactSection": {
     "headline": "Need quality car repair?",
@@ -118,6 +132,7 @@
     "mapEmail": "info@autoservice.de",
     "mapOpenLink": "Open map",
     "mapDirections": "Get directions",
+    "mapTitle": "Map: workshop location",
     "modal": {
       "title": "Contact Form",
       "name": "Name",

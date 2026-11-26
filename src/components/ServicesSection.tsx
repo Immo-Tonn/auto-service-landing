@@ -80,6 +80,7 @@ function ServiceCard({ id, hasSlides, onClick }: { id: string; hasSlides: boolea
 
 function SliderContent({ serviceId, slides }: { serviceId: string; slides: string[] }) {
   const t = useTranslations('services')
+  const tc = useTranslations('common')
   const captions = t.raw(`cards.${serviceId}.slides`) as string[]
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
@@ -144,7 +145,7 @@ function SliderContent({ serviceId, slides }: { serviceId: string; slides: strin
           </AnimatePresence>
 
           {current > 0 && (
-            <button type="button" onClick={prev} aria-label="Vorheriges Bild"
+            <button type="button" onClick={prev} aria-label={tc('prevImage')}
               className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-yellow-400/90 text-white hover:text-zinc-900 flex items-center justify-center transition-colors duration-200">
               <svg aria-hidden="true" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <polyline points="15 18 9 12 15 6" />
@@ -153,7 +154,7 @@ function SliderContent({ serviceId, slides }: { serviceId: string; slides: strin
           )}
 
           {current < slides.length - 1 && (
-            <button type="button" onClick={next} aria-label="Nächstes Bild"
+            <button type="button" onClick={next} aria-label={tc('nextImage')}
               className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-yellow-400/90 text-white hover:text-zinc-900 flex items-center justify-center transition-colors duration-200">
               <svg aria-hidden="true" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <polyline points="9 18 15 12 9 6" />
@@ -171,7 +172,7 @@ function SliderContent({ serviceId, slides }: { serviceId: string; slides: strin
               <button key={i} type="button" onClick={() => goTo(i, i > current ? 1 : -1)}
                 aria-current={i === current ? 'true' : undefined}
                 className={`rounded-full transition-all duration-200 ${i === current ? 'w-5 h-2 bg-yellow-400' : 'w-2 h-2 bg-zinc-600 hover:bg-zinc-400'}`}
-                aria-label={`Bild ${i + 1}`} />
+                aria-label={tc('imageN', { n: i + 1 })} />
             ))}
           </div>
         </div>

@@ -22,6 +22,7 @@ const GALLERY = [
 
 export default function AboutSection() {
   const t = useTranslations('about')
+  const tc = useTranslations('common')
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const openLightbox = (index: number) => { setLightboxIndex(index); setLightboxOpen(true) }
@@ -175,7 +176,7 @@ export default function AboutSection() {
                          bg-black/60 hover:bg-yellow-400 text-white hover:text-zinc-900
                          w-10 h-10 rounded-full flex items-center justify-center
                          text-2xl transition-colors"
-              aria-label="Previous"
+              aria-label={tc('prevImage')}
             >
               ‹
             </button>
@@ -188,7 +189,7 @@ export default function AboutSection() {
                          bg-black/60 hover:bg-yellow-400 text-white hover:text-zinc-900
                          w-10 h-10 rounded-full flex items-center justify-center
                          text-2xl transition-colors"
-              aria-label="Next"
+              aria-label={tc('nextImage')}
             >
               ›
             </button>

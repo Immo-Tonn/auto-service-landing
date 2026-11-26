@@ -9,6 +9,7 @@
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import { AnimatePresence, motion, type HTMLMotionProps } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
 type PanelMotion = Pick<HTMLMotionProps<'div'>, 'initial' | 'animate' | 'exit' | 'transition'>
 
@@ -59,12 +60,13 @@ export default function Dialog({
   panelClassName = DEFAULT_PANEL,
   backdropClassName = 'bg-black/70 backdrop-blur-sm',
   closeClassName = DEFAULT_CLOSE,
-  closeLabel = 'Schließen', // TODO(i18n, block 7)
+  closeLabel,
   onKeyDown,
   panelMotion = DEFAULT_MOTION,
   centered = true,
   onAfterClose,
 }: DialogProps) {
+  const tc = useTranslations('common')
   const ref = useRef<HTMLDialogElement>(null)
   const titleId = useId()
 
@@ -130,7 +132,7 @@ export default function Dialog({
             <button
               type="button"
               onClick={onClose}
-              aria-label={closeLabel}
+              aria-label={closeLabel ?? tc('close')}
               className={closeClassName}
             >
               <span aria-hidden="true">×</span>

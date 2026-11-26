@@ -12,7 +12,7 @@ const LOCALES = ['ru', 'de', 'en'] as const
 type Locale = (typeof LOCALES)[number]
 
 const NAV_ITEMS = [
-  { key: 'home',     href: '#hero'     },
+  { key: 'home',     href: '#top'      }, // #top = very top, incl. info bar
   { key: 'services', href: '#services' },
   { key: 'about',    href: '#about'    },
   { key: 'contact',  href: '#contact'  },
@@ -94,6 +94,7 @@ function Logo({ small = false }: { small?: boolean }) {
 export default function Header() {
   const t       = useTranslations('nav')
   const tf      = useTranslations('footer')
+  const tc      = useTranslations('common')
   const locale  = useLocale()
   const router  = useRouter()
   const pathname = usePathname()
@@ -124,7 +125,8 @@ export default function Header() {
     const hash = pendingHash.current
     pendingHash.current = null
     if (!hash) return
-    document.querySelector(hash)?.scrollIntoView()
+    if (hash === '#top') window.scrollTo({ top: 0 })
+    else document.querySelector(hash)?.scrollIntoView()
     history.pushState(null, '', hash)
   }
 
@@ -165,7 +167,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-6">
 
           {/* Logo */}
-          <a href={`#hero`} aria-label="AutoService — zur Startseite">
+          <a href="#top" aria-label={tc('toHome')}>
             <Logo />
           </a>
 
@@ -219,7 +221,7 @@ export default function Header() {
             className="min-[900px]:hidden text-slate-200 hover:text-yellow-400 transition-colors p-1"
             type="button"
             onClick={() => setMenuOpen(true)}
-            aria-label="Menü öffnen"
+            aria-label={tc('openMenu')}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
           >
@@ -236,7 +238,7 @@ export default function Header() {
         onClose={() => setMenuOpen(false)}
         onAfterClose={scrollToPending}
         ariaLabel={tf('nav.title')}
-        closeLabel="Menü schließen"
+        closeLabel={tc('closeMenu')}
         centered={false}
         backdropClassName="bg-black/60"
         panelMotion={{

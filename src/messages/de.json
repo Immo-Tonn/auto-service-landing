@@ -3,12 +3,25 @@
     "title": "AutoService — Ihre Kfz-Werkstatt | Reparatur, Wartung, Diagnose",
     "description": "Kfz-Service für Reparatur, Wartung und Diagnose. Termin online buchen oder Rückruf anfordern. Mo–Sa von 9:00 bis 20:00 Uhr."
   },
+  "common": {
+    "close": "Schließen",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "toHome": "AutoService — zur Startseite",
+    "skipToContent": "Zum Inhalt springen",
+    "prevImage": "Vorheriges Bild",
+    "nextImage": "Nächstes Bild",
+    "imageN": "Bild {n}",
+    "loading": "Laden…",
+    "networkError": "Netzwerkfehler. Bitte versuchen Sie es erneut."
+  },
   "hero": {
     "title": "Ihre Autoexperten — sicher, schnell und zuverlässig",
     "subtitle": "Inspektion, Reparatur oder HU — wir bringen Ihr Fahrzeug zurück auf die Straße",
     "cta": "Termin buchen",
     "bookingBtn": "Termin buchen",
-    "callbackBtn": "Rückruf anfordern"
+    "callbackBtn": "Rückruf anfordern",
+    "imgAlt": "Fahrzeug in unserer Werkstatt"
   },
   "callback": {
     "title": "Rückruf-Informationen",
@@ -43,7 +56,7 @@
     "photo2": "Unsere Mechaniker",
     "photo3": "Achsvermessung",
     "photo4": "Kundenservice",
-    "photo5": "office"
+    "photo5": "Büro"
   },
   "services": {
     "sectionTitle": "Unsere Leistungen",
@@ -100,7 +113,8 @@
     "success": "Ihr Termin wurde erfolgreich gebucht!",
     "confirmation": "Sie erhalten eine Bestätigung per E-Mail",
     "booked": "Belegt",
-    "available": "Verfügbar"
+    "available": "Verfügbar",
+    "error": "Fehler beim Buchen"
   },
   "contactSection": {
     "headline": "Benötigen Sie eine professionelle Autoreparatur?",
@@ -118,6 +132,7 @@
     "mapEmail": "info@autoservice.de",
     "mapOpenLink": "Karte öffnen",
     "mapDirections": "Route planen",
+    "mapTitle": "Karte: Standort der Werkstatt",
     "modal": {
       "title": "Kontaktformular",
       "name": "Name",

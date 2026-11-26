@@ -31,10 +31,11 @@ function FacebookIcon() {
 
 export default function Footer() {
   const t = useTranslations('footer')
+  const tc = useTranslations('common')
   const year = new Date().getFullYear()
 
   const navLinks = [
-    { key: 'home',     href: '#hero'     },
+    { key: 'home',     href: '#top'      },
     { key: 'services', href: '#services' },
     { key: 'about',    href: '#about'    },
     { key: 'contact',  href: '#contact'  },
@@ -60,7 +61,7 @@ export default function Footer() {
 
           {/* Left zone — Logo + tagline */}
           <div className="flex flex-col items-start md:max-w-[220px]">
-            <a href="#hero" className="mb-5" aria-label="AutoService — zur Startseite">
+            <a href="#top" className="mb-5" aria-label={tc('toHome')}>
               <div className="border-2 border-yellow-400 text-yellow-400 font-black tracking-widest uppercase px-3 py-1 text-lg">
                 AutoService
               </div>

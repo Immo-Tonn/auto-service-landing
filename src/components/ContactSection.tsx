@@ -180,7 +180,7 @@ export default function ContactSection() {
         <iframe
           src="https://www.openstreetmap.org/export/embed.html?bbox=13.3149%2C52.4928%2C13.3269%2C52.4988&layer=mapnik&marker=52.4958%2C13.3209"
           className="w-full h-full border-0"
-          title="Auto Service location"
+          title={t('mapTitle')}
           loading="lazy"
         />
 

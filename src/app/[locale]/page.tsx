@@ -21,9 +21,24 @@ export default function Home({
 
   return (
     <>
+      {/* Skip link: first Tab stop. Always styled, parked above the
+          viewport and slides in on focus (no sr-only/not-sr-only conflicts). */}
+      <a
+        href="#main"
+        className="
+          fixed top-2 left-2 z-[100]
+          -translate-y-[200%] focus:translate-y-0
+          bg-yellow-400 text-zinc-900 font-bold
+          px-4 py-2 rounded shadow-lg
+          transition-transform duration-200
+        "
+      >
+        {t('common.skipToContent')}
+      </a>
+
       <Header />
 
-      <main className="flex flex-col min-h-screen bg-zinc-900">
+      <main id="main" tabIndex={-1} className="flex flex-col min-h-screen bg-zinc-900 outline-none">
 
         {/* ── Hero ──────────────────────────────────────────────────────── */}
         <section id="hero" className="bg-black text-white">
@@ -40,7 +55,7 @@ export default function Home({
 >
   <Image
     src="/E500.avif"
-    alt="Auto Service Workshop"
+    alt={t('hero.imgAlt')}
     width={3840}
     height={1664}
     loading="eager"

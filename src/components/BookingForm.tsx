@@ -10,6 +10,7 @@ interface Props {
 
 export default function BookingForm({ onSuccess }: Props) {
   const t = useTranslations('booking')
+  const tc = useTranslations('common')
   const locale = useLocale()
 
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
@@ -50,13 +51,13 @@ export default function BookingForm({ onSuccess }: Props) {
 
       if (!res.ok) {
         const data = await res.json()
-        setError(data.error || 'Fehler beim Buchen')
+        setError(data.error || t('error'))
         return
       }
 
       onSuccess()
     } catch {
-      setError('Netzwerkfehler. Bitte versuchen Sie es erneut.')
+      setError(tc('networkError'))
     } finally {
       setLoading(false)
     }
@@ -145,7 +146,7 @@ export default function BookingForm({ onSuccess }: Props) {
               disabled={!isValid || loading}
               className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-zinc-700 disabled:text-slate-400 text-white font-bold py-2 px-4 rounded-lg transition"
             >
-              {loading ? 'Laden...' : t('submit')}
+              {loading ? tc('loading') : t('submit')}
             </button>
           </div>
         </form>

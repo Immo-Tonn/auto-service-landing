@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 
 interface DateSlot {
   date: string
@@ -16,6 +16,8 @@ interface Props {
 
 export default function BookingCalendar({ onDateSelect, selectedDate, refreshKey }: Props) {
   const t = useTranslations('booking')
+  const tc = useTranslations('common')
+  const locale = useLocale()
   const [slots, setSlots] = useState<DateSlot[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -29,7 +31,7 @@ export default function BookingCalendar({ onDateSelect, selectedDate, refreshKey
   }, [refreshKey])
 
   if (loading) {
-    return <div className="text-slate-400 text-center py-4">Laden...</div>
+    return <div role="status" className="text-slate-400 text-center py-4">{tc('loading')}</div>
   }
 
   return (
@@ -56,10 +58,10 @@ export default function BookingCalendar({ onDateSelect, selectedDate, refreshKey
             `}
           >
             <div className="font-semibold">
-              {date.toLocaleDateString('de-DE', { weekday: 'short' })}
+              {date.toLocaleDateString(locale, { weekday: 'short' })}
             </div>
             <div>
-              {date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })}
+              {date.toLocaleDateString(locale, { day: '2-digit', month: '2-digit' })}
             </div>
             {!slot.available && (
               <div className="text-xs mt-1">{t('booked')}</div>
