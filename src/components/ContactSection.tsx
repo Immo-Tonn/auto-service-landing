@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import Dialog from './ui/Dialog'
 import SuccessDialog from './ui/SuccessDialog'
+import MapEmbed from './MapEmbed'
 
 // ─── Contact form ──────────────────────────────────────────────────────────────
 
@@ -176,16 +177,19 @@ export default function ContactSection() {
       </div>
 
       {/* ── Map ─────────────────────────────────────────────────────────── */}
-      <div className="relative h-[420px] sm:h-[500px]">
-        <iframe
-          src="https://www.openstreetmap.org/export/embed.html?bbox=13.3149%2C52.4928%2C13.3269%2C52.4988&layer=mapnik&marker=52.4958%2C13.3209"
-          className="w-full h-full border-0"
-          title={t('mapTitle')}
-          loading="lazy"
-        />
+      {/* Phones/tablets: card below the map. Desktop (lg): card overlays the map bottom-left. */}
+      <div className="relative bg-zinc-950 lg:h-[500px]">
+        <div className="relative h-[360px] lg:h-full">
+          <MapEmbed
+            address={`${t('mapAddressStreet')}, ${t('mapAddressCity')}`}
+            title={t('mapTitle')}
+            // keep the placeholder text clear of the overlay card on desktop
+            placeholderClassName="lg:pl-[22rem]"
+          />
+        </div>
 
-        {/* Info card overlay */}
-        <div className="absolute bottom-4 left-4 bg-zinc-900/95 backdrop-blur-sm rounded-xl p-5 max-w-xs shadow-2xl border border-zinc-700">
+        {/* Info card */}
+        <div className="m-4 lg:m-0 lg:absolute lg:bottom-4 lg:left-4 bg-zinc-900/95 backdrop-blur-sm rounded-xl p-5 lg:max-w-xs shadow-2xl border border-zinc-700">
           <div className="flex items-start gap-3 mb-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icons/pin.svg" alt="" width={20} height={20} className="mt-0.5 shrink-0" />

@@ -133,6 +133,11 @@
     "mapOpenLink": "Karte öffnen",
     "mapDirections": "Route planen",
     "mapTitle": "Karte: Standort der Werkstatt",
+    "mapLoad": "Karte laden",
+    "mapConsentText": "Beim Laden der Karte werden Daten, u. a. Ihre IP-Adresse, an Google übertragen.",
+    "mapPrivacyLink": "Mehr dazu in der Datenschutzerklärung",
+    "mapRemember": "Google Maps künftig automatisch laden",
+    "mapHide": "Karte ausblenden",
     "modal": {
       "title": "Kontaktformular",
       "name": "Name",
@@ -186,6 +191,10 @@
       "cookies": {
         "title": "Cookies und Reichweitenmessung",
         "body": "Diese Website setzt ausschließlich technisch notwendige Cookies ein. Eine Analyse des Nutzerverhaltens findet nicht statt."
+      },
+      "maps": {
+        "title": "Google Maps",
+        "body": "Auf unserer Website können Sie eine Karte von Google Maps (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) laden. Die Karte wird erst eingebunden, nachdem Sie auf „Karte laden“ geklickt haben. Dabei werden Daten wie Ihre IP-Adresse an Google übertragen und ggf. in den USA verarbeitet; Google kann dabei Cookies setzen.\n\nRechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Wenn Sie „künftig automatisch laden“ wählen, speichern wir diese Auswahl ausschließlich lokal in Ihrem Browser (localStorage). Sie können die Einwilligung jederzeit über „Karte ausblenden“ widerrufen.\n\nWeitere Informationen: https://policies.google.com/privacy"
       },
       "rights": {
         "title": "Ihre Rechte",

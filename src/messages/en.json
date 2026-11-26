@@ -133,6 +133,11 @@
     "mapOpenLink": "Open map",
     "mapDirections": "Get directions",
     "mapTitle": "Map: workshop location",
+    "mapLoad": "Load map",
+    "mapConsentText": "Loading the map sends data, including your IP address, to Google.",
+    "mapPrivacyLink": "More in our privacy policy",
+    "mapRemember": "Always load Google Maps automatically",
+    "mapHide": "Hide map",
     "modal": {
       "title": "Contact Form",
       "name": "Name",
@@ -186,6 +191,10 @@
       "cookies": {
         "title": "Cookies and analytics",
         "body": "This website uses strictly necessary cookies only. No analysis of user behaviour takes place."
+      },
+      "maps": {
+        "title": "Google Maps",
+        "body": "Our website lets you load a map from Google Maps (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland). The map is only embedded after you click “Load map”. Data such as your IP address is then transmitted to Google and may be processed in the USA; Google may set cookies.\n\nThe legal basis is your consent (Art. 6(1)(a) GDPR). If you choose “always load automatically”, we store this choice only locally in your browser (localStorage). You can withdraw your consent at any time via “Hide map”.\n\nMore information: https://policies.google.com/privacy"
       },
       "rights": {
         "title": "Your rights",

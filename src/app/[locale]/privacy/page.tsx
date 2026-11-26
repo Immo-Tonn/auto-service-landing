@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
-const SECTIONS = ['controller', 'data', 'cookies', 'rights'] as const
+const SECTIONS = ['controller', 'data', 'cookies', 'maps', 'rights'] as const
 
 export default function PrivacyPage({
   params,
@@ -30,7 +30,7 @@ export default function PrivacyPage({
           </p>
 
           {SECTIONS.map((key) => (
-            <section key={key} className="mb-10">
+            <section key={key} id={key} className="mb-10 scroll-mt-24">
               <h2 className="text-xl font-bold text-white mb-3">
                 {t(`sections.${key}.title`)}
               </h2>
