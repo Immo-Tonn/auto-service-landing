@@ -41,9 +41,10 @@ export default function Home({
   <Image
     src="/E500.avif"
     alt="Auto Service Workshop"
-    width={1920}
-    height={1080}
-    priority
+    width={3840}
+    height={1664}
+    loading="eager"
+    fetchPriority="high"
     sizes="100vw"
     className="block h-auto w-full"
   />

@@ -12,11 +12,11 @@ const STATS = [
 ]
 
 const GALLERY = [
-  { src: '/mainhall.JPG',    alt: 'photo1', unopt: false },
-  { src: '/mechaniker.jfif', alt: 'photo2', unopt: true  },
-  { src: '/geometry.png',    alt: 'photo3', unopt: false },
-  { src: '/office.JPG',      alt: 'photo5', unopt: false },
-  { src: '/visitors.png',    alt: 'photo4', unopt: false },
+  { src: '/mainhall.webp',   alt: 'photo1' },
+  { src: '/mechaniker.webp', alt: 'photo2' },
+  { src: '/geometry.webp',   alt: 'photo3' },
+  { src: '/office.webp',     alt: 'photo5' },
+  { src: '/visitors.webp',   alt: 'photo4' },
 ]
 
 export default function AboutSection() {
@@ -120,7 +120,7 @@ export default function AboutSection() {
         <div
           className="flex gap-3 mt-3 overflow-x-auto pb-2 snap-x snap-mandatory"
         >
-          {GALLERY.map(({ src, alt, unopt }, index) => (
+          {GALLERY.map(({ src, alt }, index) => (
             <div
               key={src}
               className="relative flex-shrink-0 overflow-hidden rounded-sm group cursor-pointer snap-start"
@@ -133,7 +133,6 @@ export default function AboutSection() {
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 sizes="280px"
-                unoptimized={unopt}
               />
               <div className="absolute inset-0 bg-black/50 flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="text-white text-xs font-medium tracking-wide uppercase px-3 pb-3">
@@ -176,7 +175,6 @@ export default function AboutSection() {
                 alt={t(GALLERY[lightboxIndex].alt)}
                 fill
                 className="object-contain"
-                unoptimized={GALLERY[lightboxIndex].unopt}
                 sizes="(max-width: 768px) 100vw, 900px"
               />
             </div>
